@@ -4,6 +4,14 @@ return require("packer").startup(function(use)
 	use("neovim/nvim-lspconfig") -- Configurations for Nvim LSP
 	use("mhartington/formatter.nvim") -- Format code
 	use("mfussenegger/nvim-lint")
+	use("neovim/nvim-lspconfig")
+	-- nvim-cmp
+	use("hrsh7th/nvim-cmp")
+	use("hrsh7th/cmp-nvim-lsp")
+	use("hrsh7th/cmp-buffer")
+	use("hrsh7th/cmp-path")
+	use("hrsh7th/cmp-cmdline")
+
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
