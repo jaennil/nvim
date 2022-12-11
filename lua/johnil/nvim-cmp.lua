@@ -61,7 +61,8 @@ cmp.setup.cmdline(":", {
 
 -- Set up lspconfig.
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- IMPORTANT: with those lines enabled lsp binds will not work
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require("lspconfig")["pyright"].setup({
-	capabilities = capabilities,
-})
+-- require("lspconfig")["pyright"].setup({
+-- 	capabilities = capabilities,
+-- })
