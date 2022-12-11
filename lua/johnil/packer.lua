@@ -9,6 +9,12 @@ return require("packer").startup(function(use)
 	use("hrsh7th/nvim-cmp")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("hrsh7th/cmp-nvim-lsp")
+	use({
+		"windwp/nvim-autopairs",
+		config = function()
+			require("nvim-autopairs").setup({})
+		end,
+	})
 	use("hrsh7th/cmp-buffer")
 	use("hrsh7th/cmp-path")
 	use("hrsh7th/cmp-cmdline")
