@@ -1,13 +1,13 @@
 return require("packer").startup(function(use)
-    -- packer can manage itself
+	-- packer can manage itself
 	use("wbthomason/packer.nvim")
-    -- copilot
+	-- copilot
 	use("github/copilot.vim")
-    -- formatter
+	-- formatter
 	use("mhartington/formatter.nvim")
-    -- linter
+	-- linter
 	use("mfussenegger/nvim-lint")
-    -- lsp
+	-- lsp
 	use("neovim/nvim-lspconfig")
 	-- nvim-cmp
 	use("hrsh7th/nvim-cmp")
@@ -15,13 +15,20 @@ return require("packer").startup(function(use)
 	use("hrsh7th/cmp-path")
 	use("hrsh7th/cmp-cmdline")
 	use("hrsh7th/cmp-nvim-lsp")
-    use { 'saadparwaiz1/cmp_luasnip' }
-    -- snippets
+	use({
+		"nvim-tree/nvim-tree.lua",
+		requires = {
+			"nvim-tree/nvim-web-devicons", -- optional, for file icons
+		},
+		tag = "nightly", -- optional, updated every week. (see issue #1193)
+	})
+	use({ "saadparwaiz1/cmp_luasnip" })
+	-- snippets
 	use("rafamadriz/friendly-snippets")
-    use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
-    -- indent-blankline
+	use({ "L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*" })
+	-- indent-blankline
 	use("lukas-reineke/indent-blankline.nvim")
-    -- which key (for keybindings cheatsheet)
+	-- which key (for keybindings cheatsheet)
 	use({
 		"folke/which-key.nvim",
 		config = function()
@@ -32,30 +39,30 @@ return require("packer").startup(function(use)
 			})
 		end,
 	})
-    -- auto pairs
+	-- auto pairs
 	use({
 		"windwp/nvim-autopairs",
 		config = function()
 			require("nvim-autopairs").setup({})
 		end,
 	})
-    -- tree sitter
+	-- tree sitter
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 	})
-    -- icons
+	-- icons
 	use("nvim-tree/nvim-web-devicons")
-    -- theme
+	-- theme
 	use("navarasu/onedark.nvim")
-    -- comment
+	-- comment
 	use({
 		"numToStr/Comment.nvim",
 		config = function()
 			require("Comment").setup()
 		end,
 	})
-    -- telescope
+	-- telescope
 	use({
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.0",
