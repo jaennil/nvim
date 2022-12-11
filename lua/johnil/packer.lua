@@ -1,6 +1,8 @@
 return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use 'github/copilot.vim'
+    use 'neovim/nvim-lspconfig' -- Configurations for Nvim LSP
+    use 'mhartington/formatter.nvim' -- Format code
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'

@@ -85,6 +85,16 @@ _G.packer_plugins = {
     path = "/home/johnil/.local/share/nvim/site/pack/packer/start/copilot.vim",
     url = "https://github.com/github/copilot.vim"
   },
+  ["formatter.nvim"] = {
+    loaded = true,
+    path = "/home/johnil/.local/share/nvim/site/pack/packer/start/formatter.nvim",
+    url = "https://github.com/mhartington/formatter.nvim"
+  },
+  ["nvim-lspconfig"] = {
+    loaded = true,
+    path = "/home/johnil/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
+    url = "https://github.com/neovim/nvim-lspconfig"
+  },
   ["nvim-treesitter"] = {
     loaded = true,
     path = "/home/johnil/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
