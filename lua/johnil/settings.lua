@@ -23,6 +23,9 @@ opt.tabstop=4
 -- autoindent for new lines
 opt.smartindent=true
 
+-- paste from system clipboard
+opt.clipboard='unnamedplus'
+
 -- don't auto commenting new lines
 cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
 
