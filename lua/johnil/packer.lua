@@ -48,8 +48,9 @@ return require("packer").startup(function(use)
 	})
 	-- icons
 	use("nvim-tree/nvim-web-devicons")
-	-- theme
+	-- themes
 	use("navarasu/onedark.nvim")
+    use 'folke/tokyonight.nvim'
 	-- comment
 	use({
 		"numToStr/Comment.nvim",

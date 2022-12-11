@@ -41,3 +41,11 @@ augroup YankHighlight
   autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}
 augroup END
 ]],false)
+
+exec([[
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePost * FormatWrite
+augroup END
+]], false)
+
