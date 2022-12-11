@@ -9,6 +9,17 @@ return require("packer").startup(function(use)
 	use("hrsh7th/nvim-cmp")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("hrsh7th/cmp-nvim-lsp")
+	-- Lua
+	use({
+		"folke/which-key.nvim",
+		config = function()
+			require("which-key").setup({
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			})
+		end,
+	})
 	use({
 		"windwp/nvim-autopairs",
 		config = function()
