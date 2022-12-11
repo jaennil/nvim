@@ -110,6 +110,11 @@ _G.packer_plugins = {
     path = "/home/johnil/.local/share/nvim/site/pack/packer/start/formatter.nvim",
     url = "https://github.com/mhartington/formatter.nvim"
   },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "/home/johnil/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
+  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/home/johnil/.local/share/nvim/site/pack/packer/start/nvim-cmp",

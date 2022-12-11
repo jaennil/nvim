@@ -7,6 +7,7 @@ return require("packer").startup(function(use)
 	use("neovim/nvim-lspconfig")
 	-- nvim-cmp
 	use("hrsh7th/nvim-cmp")
+	use("lukas-reineke/indent-blankline.nvim")
 	use("hrsh7th/cmp-nvim-lsp")
 	use("hrsh7th/cmp-buffer")
 	use("hrsh7th/cmp-path")
