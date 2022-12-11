@@ -15,6 +15,9 @@ return require("packer").startup(function(use)
 	use("hrsh7th/cmp-path")
 	use("hrsh7th/cmp-cmdline")
 	use("hrsh7th/cmp-nvim-lsp")
+	-- git
+	use("lewis6991/gitsigns.nvim")
+	-- nvim-tree
 	use({
 		"nvim-tree/nvim-tree.lua",
 		requires = {
@@ -29,16 +32,8 @@ return require("packer").startup(function(use)
 	-- indent-blankline
 	use("lukas-reineke/indent-blankline.nvim")
 	-- which key (for keybindings cheatsheet)
-	use({
-		"folke/which-key.nvim",
-		config = function()
-			require("which-key").setup({
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
-			})
-		end,
-	})
+	use("folke/which-key.nvim")
+
 	-- auto pairs
 	use({
 		"windwp/nvim-autopairs",
