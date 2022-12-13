@@ -1,2 +1,3 @@
-require("onedark").load()
+-- Lua
+vim.cmd[[colorscheme tokyonight]]
 require("johnil")
