@@ -46,13 +46,15 @@ return require("packer").startup(function(use)
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 	})
-    -- rainbow parentheses (for tree sitter)
-    use("p00f/nvim-ts-rainbow")
+	-- rainbow parentheses (for tree sitter)
+	use("p00f/nvim-ts-rainbow")
 	-- icons
 	use("nvim-tree/nvim-web-devicons")
+	-- better git commands
+	use("tpope/vim-fugitive")
 	-- themes
 	use("navarasu/onedark.nvim")
-    use 'folke/tokyonight.nvim'
+	use("folke/tokyonight.nvim")
 	-- comment
 	use({
 		"numToStr/Comment.nvim",
