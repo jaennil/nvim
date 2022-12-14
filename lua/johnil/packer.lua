@@ -18,6 +18,7 @@ return require("packer").startup(function(use)
 			{ "williamboman/mason-lspconfig.nvim" },
 
 			-- Autocompletion
+			{ "hrsh7th/cmp-cmdline"},
 			{ "hrsh7th/nvim-cmp" },
 			{ "hrsh7th/cmp-buffer" },
 			{ "hrsh7th/cmp-path" },
@@ -79,4 +80,6 @@ return require("packer").startup(function(use)
 		-- or                            , branch = '0.1.x',
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
+	-- zen mode
+	use("folke/zen-mode.nvim")
 end)
