@@ -12,6 +12,32 @@ opt.number = true
 -- cursor in the middle of the screen
 opt.so = 999
 
+-- disabe line wrap
+opt.wrap = false
+
+-- disable swap file
+opt.swapfile = false
+
+-- disable backup file
+opt.backup = false
+
+opt.hlsearch = false
+
+opt.termguicolors = true
+
+opt.scrolloff = 8
+
+opt.signcolumn = "yes"
+
+opt.updatetime = 50
+
+opt.incsearch = true
+
+opt.undofile = true
+
+-- soft tabs
+opt.softtabstop = 4
+
 -- use spaces instead of tabs
 opt.expandtab = true
 
