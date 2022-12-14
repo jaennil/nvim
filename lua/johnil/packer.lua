@@ -46,6 +46,8 @@ return require("packer").startup(function(use)
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 	})
+    -- rainbow parentheses (for tree sitter)
+    use("p00f/nvim-ts-rainbow")
 	-- icons
 	use("nvim-tree/nvim-web-devicons")
 	-- themes
