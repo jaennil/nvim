@@ -4,48 +4,54 @@ local cmd = vim.cmd
 local exec = vim.api.nvim_exec
 
 -- leader to space
-g.mapleader = ' '
+g.mapleader = " "
 
-opt.relativenumber=true
+opt.relativenumber = true
+opt.number = true
 
 -- cursor in the middle of the screen
-opt.so=999                        
+opt.so = 999
 
 -- use spaces instead of tabs
-opt.expandtab=true
+opt.expandtab = true
 
 -- shift 4 spaces when tab
-opt.shiftwidth=4
+opt.shiftwidth = 4
 
 -- set tabstop to 4 spaces
-opt.tabstop=4
+opt.tabstop = 4
 
 -- autoindent for new lines
-opt.smartindent=true
+opt.smartindent = true
 
 -- paste from system clipboard
-opt.clipboard='unnamedplus'
+opt.clipboard = "unnamedplus"
 
 -- don't auto commenting new lines
-cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
+cmd([[au BufEnter * set fo-=c fo-=r fo-=o]])
 
 -- remembers when you last edited a file
-cmd [[
+cmd([[
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-]]
+]])
 
 -- highlight yanked text for few seconds
-exec([[
+exec(
+	[[
 augroup YankHighlight
   autocmd!
   autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}
 augroup END
-]],false)
+]],
+	false
+)
 
-exec([[
+exec(
+	[[
 augroup FormatAutogroup
   autocmd!
   autocmd BufWritePost * FormatWrite
 augroup END
-]], false)
-
+]],
+	false
+)
