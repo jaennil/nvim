@@ -7,6 +7,7 @@ lsp.ensure_installed({
 	"eslint",
 	"sumneko_lua",
 	"rust_analyzer",
+	"pyright",
 })
 
 local cmp = require("cmp")
@@ -43,7 +44,7 @@ vim.diagnostic.config({
 
 lsp.on_attach(function(client, bufnr)
 	local opts = { buffer = bufnr, remap = false }
-    end
+
 	if client.name == "eslint" then
 		vim.cmd([[ LspStop eslint ]])
 		return
@@ -73,7 +74,7 @@ lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "<leader>vrr", function()
 		vim.lsp.buf.references()
 	end, opts)
-	vin.keymap.set("n", "<leader>vrn", function()
+	vim.keymap.set("n", "<leader>vrn", function()
 		vim.lsp.buf.rename()
 	end, opts)
 	vim.keymap.set("i", "<C-h>", function()
