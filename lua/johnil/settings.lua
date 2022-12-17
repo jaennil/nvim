@@ -1,83 +1,39 @@
-local g = vim.g
-local opt = vim.opt
-local cmd = vim.cmd
-local exec = vim.api.nvim_exec
+vim.opt.nu = true
+vim.opt.relativenumber = true
 
--- leader to space
-g.mapleader = " "
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
 
-opt.relativenumber = true
-opt.number = true
+vim.opt.smartindent = true
 
--- cursor in the middle of the screen
-opt.so = 999
+vim.opt.wrap = false
 
--- disabe line wrap
-opt.wrap = false
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
 
--- disable swap file
-opt.swapfile = false
+vim.opt.hlsearch = false
+-- regex search
+vim.opt.incsearch = true
 
--- disable backup file
-opt.backup = false
+vim.opt.termguicolors = true
 
-opt.hlsearch = false
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = "yes"
+-- for gf bind (go to file)
+vim.opt.isfname:append("@-@")
 
-opt.termguicolors = true
+vim.opt.updatetime = 50
 
-opt.scrolloff = 8
-
-opt.signcolumn = "yes"
-
-opt.updatetime = 50
-
-opt.incsearch = true
-
-opt.undofile = true
-
--- soft tabs
-opt.softtabstop = 4
-
--- use spaces instead of tabs
-opt.expandtab = true
-
--- shift 4 spaces when tab
-opt.shiftwidth = 4
-
--- set tabstop to 4 spaces
-opt.tabstop = 4
-
--- autoindent for new lines
-opt.smartindent = true
-
--- paste from system clipboard
-opt.clipboard = "unnamedplus"
+vim.g.mapleader = " "
 
 -- don't auto commenting new lines
-cmd([[au BufEnter * set fo-=c fo-=r fo-=o]])
+vim.cmd([[au BufEnter * set fo-=c fo-=r fo-=o]])
 
 -- remembers when you last edited a file
-cmd([[
+vim.cmd([[
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 ]])
-
--- highlight yanked text for few seconds
-exec(
-	[[
-augroup YankHighlight
-  autocmd!
-  autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}
-augroup END
-]],
-	false
-)
-
-exec(
-	[[
-augroup FormatAutogroup
-  autocmd!
-  autocmd BufWritePost * FormatWrite
-augroup END
-]],
-	false
-)
