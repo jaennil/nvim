@@ -66,10 +66,10 @@ return require("packer").startup(function(use)
 	-- icons
 	-- use("nvim-tree/nvim-web-devicons")
 	-- comment
-	-- use({
-	-- 	"numToStr/Comment.nvim",
-	-- 	config = function()
-	-- 		require("Comment").setup()
-	-- 	end,
-	-- })
+	use({
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup()
+		end,
+	})
 end)
