@@ -7,6 +7,16 @@ lsp.ensure_installed({
     'pyright',
 })
 
+-- Fix Undefined global 'vim'
+lsp.configure('sumneko_lua', {
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { 'vim' }
+            }
+        }
+    }
+})
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
