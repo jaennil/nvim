@@ -50,9 +50,9 @@ return require("packer").startup(function(use)
     use("folke/zen-mode.nvim")
     use("github/copilot.vim")
 	-- indent-blankline
-	-- use("lukas-reineke/indent-blankline.nvim")
+	use("lukas-reineke/indent-blankline.nvim")
 	-- which key (for keybindings cheatsheet)
-	-- use("folke/which-key.nvim")
+	use("folke/which-key.nvim")
 
 	-- auto pairs
 	-- use({

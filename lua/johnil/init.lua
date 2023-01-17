@@ -1,5 +1,6 @@
 require("johnil.settings")
 require("johnil.remap")
+require("johnil.packer")
 
 local augroup = vim.api.nvim_create_augroup
 local johnilGroup = augroup('johnil', {})
