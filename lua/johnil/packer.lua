@@ -72,4 +72,6 @@ return require("packer").startup(function(use)
 			require("Comment").setup()
 		end,
 	})
+    --rust
+    use("rust-lang/rust.vim")
 end)
