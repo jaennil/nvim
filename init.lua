@@ -1,1 +1,1 @@
-require("johnil")
+vim.opt.number = true
