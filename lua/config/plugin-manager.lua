@@ -12,4 +12,15 @@ end
 vim.opt.rtp:prepend(lazypath)
 -- Example using a list of specs with the default options
 
-require("lazy").setup({})
+require("lazy").setup({{
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function () 
+      local configs = require("nvim-treesitter.configs")
+
+      configs.setup({
+          highlight = { enable = true },
+          indent = { enable = true },  
+        })
+    end
+ }})
