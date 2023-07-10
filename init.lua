@@ -1,1 +1,1 @@
-require("johnil")
+require("config")
