@@ -10,7 +10,6 @@ if not vim.loop.fs_stat(lazypath) then
     })
 end
 vim.opt.rtp:prepend(lazypath)
--- Example using a list of specs with the default options
 
 require("lazy").setup({
     {"nvim-treesitter/nvim-treesitter",
@@ -19,7 +18,10 @@ require("lazy").setup({
 	    local configs = require("nvim-treesitter.configs")
 
 	    configs.setup({
-		highlight = { enable = true },
+		highlight = {
+		enable = true,
+		additional_vim_regex_highlighting = false
+		},
 		indent = { enable = true },  
 	    })
 	end
