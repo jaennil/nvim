@@ -45,7 +45,6 @@ vim.api.nvim_create_user_command("Format", "call CocAction('format')", {})
 
 vim.api.nvim_create_user_command("OrganizeImports", "call CocActionAsync('runCommand', 'editor.action.organizeImport')", {})
 
-local opts = {silent = true, nowait = true}
 keyset("n", "<leader>sd", ":<C-u>CocList diagnostics<cr>", opts)
 -- TODO: better bind
 -- keyset("n", "<leader>o", ":<C-u>CocList outline<cr>", opts)

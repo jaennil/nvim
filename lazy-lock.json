@@ -1,5 +1,6 @@
 {
   "Comment.nvim": { "branch": "master", "commit": "176e85eeb63f1a5970d6b88f1725039d85ca0055" },
+  "cellular-automaton.nvim": { "branch": "main", "commit": "679943b8e1e5ef79aaeeaf4b00782c52eb4e928f" },
   "coc.nvim": { "branch": "release", "commit": "bbaa1d5d1ff3cbd9d26bb37cfda1a990494c4043" },
   "lazy.nvim": { "branch": "main", "commit": "25beed5e2e935ebc00d7e3eed1dc502df3c40e39" },
   "nvim-lspconfig": { "branch": "master", "commit": "ba3ec2527aa7aae9b989d69966174a22b7d1b1dd" },
