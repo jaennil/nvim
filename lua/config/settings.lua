@@ -11,3 +11,4 @@ vim.cmd([[
   highlight SignColumn guibg=NONE
   highlight SignColumnSB guibg=NONE
 ]])
+vim.g.netrw_banner = false
