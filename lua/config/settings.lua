@@ -12,3 +12,4 @@ vim.cmd([[
   highlight SignColumnSB guibg=NONE
 ]])
 vim.g.netrw_banner = false
+vim.api.nvim_set_option("clipboard","unnamed")
