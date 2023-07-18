@@ -32,5 +32,6 @@ require("lazy").setup({
     { "neovim/nvim-lspconfig" },
     { 'neoclide/coc.nvim',
 	branch = 'release'
-    }
+    },
+    { 'numToStr/Comment.nvim' },
 })
