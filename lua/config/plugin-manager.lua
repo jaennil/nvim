@@ -28,5 +28,6 @@ require("lazy").setup({
     },
     { "christoomey/vim-tmux-navigator",
 	lazy = false,
-    }
+    },
+    { "neovim/nvim-lspconfig" }
 })
