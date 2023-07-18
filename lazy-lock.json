@@ -4,5 +4,6 @@
   "lazy.nvim": { "branch": "main", "commit": "25beed5e2e935ebc00d7e3eed1dc502df3c40e39" },
   "nvim-lspconfig": { "branch": "master", "commit": "ba3ec2527aa7aae9b989d69966174a22b7d1b1dd" },
   "nvim-treesitter": { "branch": "master", "commit": "44211e7f6e669b8a07e86abc533b292a30c32d62" },
+  "undotree": { "branch": "master", "commit": "0e11ba7325efbbb3f3bebe06213afa3e7ec75131" },
   "vim-tmux-navigator": { "branch": "master", "commit": "cdd66d6a37d991bba7997d593586fc51a5b37aa8" }
 }

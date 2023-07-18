@@ -23,4 +23,5 @@ require("lazy").setup({
 	branch = 'release'
     },
     { 'numToStr/Comment.nvim' },
+    { "mbbill/undotree" },
 })
