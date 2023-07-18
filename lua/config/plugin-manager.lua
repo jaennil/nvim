@@ -25,4 +25,5 @@ require("lazy").setup({
     { 'numToStr/Comment.nvim' },
     { "mbbill/undotree" },
     { "eandrju/cellular-automaton.nvim" },
+    { "tpope/vim-fugitive" },
 })
