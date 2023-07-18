@@ -29,5 +29,8 @@ require("lazy").setup({
     { "christoomey/vim-tmux-navigator",
 	lazy = false,
     },
-    { "neovim/nvim-lspconfig" }
+    { "neovim/nvim-lspconfig" },
+    { 'neoclide/coc.nvim',
+	branch = 'release'
+    }
 })
