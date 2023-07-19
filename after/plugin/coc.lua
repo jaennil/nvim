@@ -33,8 +33,8 @@ vim.api.nvim_create_autocmd("CursorHold", {
 
 keyset("n", "<leader>rn", "<Plug>(coc-rename)", {silent = true})
 
-keyset("x", "<leader>f", "ggVG<Plug>(coc-format-selected)", {silent = true})
-keyset("n", "<leader>f", "ggVG<Plug>(coc-format-selected)", {silent = true})
+keyset("x", "<leader>f", "ggVG<Plug>(coc-format-selected)G", {silent = true})
+keyset("n", "<leader>f", "ggVG<Plug>(coc-format-selected)G", {silent = true})
 
 local opts = {silent = true, nowait = true}
 keyset("n", "<leader>ca", "<Plug>(coc-codeaction-cursor)", opts)
