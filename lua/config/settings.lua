@@ -13,3 +13,4 @@ vim.cmd([[
 ]])
 vim.g.netrw_banner = false
 vim.api.nvim_set_option("clipboard","unnamed")
+vim.opt.swapfile = false
