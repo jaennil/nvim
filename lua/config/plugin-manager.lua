@@ -38,4 +38,5 @@ require("lazy").setup({
 	    -- refer to the configuration section below
 	}
     },
+    { "shatur/neovim-ayu" },
 })
