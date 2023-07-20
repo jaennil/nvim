@@ -39,4 +39,5 @@ require("lazy").setup({
 	}
     },
     { "shatur/neovim-ayu" },
+    { "norcalli/nvim-colorizer.lua" },
 })
