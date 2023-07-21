@@ -11,3 +11,5 @@ vim.g.netrw_banner = false
 vim.api.nvim_set_option("clipboard","unnamed")
 vim.opt.swapfile = false
 vim.cmd([[let w:m1=matchadd('Error', '\%>80v.\+', -1)]])
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
