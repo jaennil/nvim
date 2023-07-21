@@ -40,4 +40,8 @@ require("lazy").setup({
     },
     { "shatur/neovim-ayu" },
     { "norcalli/nvim-colorizer.lua" },
+    {
+	"williamboman/mason.nvim",
+	build = ":MasonUpdate" -- :MasonUpdate updates registry contents
+    },
 })
