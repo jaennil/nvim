@@ -5,12 +5,13 @@ local brown = "#f4a460"
 local purple = "#ac64fb"
 local bright_green = "#aaf94c"
 local pink = "#ff66c4"
+local yellow = "#ffff00"
 
 require('ayu').setup({
     overrides = {
 	Normal = {bg = black },
 	-- function name
-        Function = { fg = red_orange },
+	Function = { fg = yellow },
 	-- special words like require
 	Special = { fg = red_orange },
 	Statement = { fg = red_orange },
