@@ -40,8 +40,10 @@ require("lazy").setup({
     },
     { "shatur/neovim-ayu" },
     { "norcalli/nvim-colorizer.lua" },
-    {
-	"williamboman/mason.nvim",
+    { "williamboman/mason.nvim",
 	build = ":MasonUpdate" -- :MasonUpdate updates registry contents
+    },
+    { "nvim-lualine/lualine.nvim",
+	dependencies = { "nvim-tree/nvim-web-devicons" },
     },
 })
