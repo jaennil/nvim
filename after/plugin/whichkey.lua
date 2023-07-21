@@ -36,7 +36,7 @@ wk.register({
 	},
 	f = {
 		name = "File",
-		-- f = { ":Format<cr>", "Format File" },
+		f = { ":Format<cr>", "Format File" },
 		s = { source_file, "Source File" },
 	},
 	g = {
