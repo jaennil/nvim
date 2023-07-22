@@ -19,6 +19,15 @@ local function source_file()
 end
 
 wk.register({
+	t = {
+		name = "Telescope",
+		f = { ":Telescope find_files theme=dropdown<cr>", "Telescope find files" },
+		l = { ":Telescope live_grep theme=dropdown<cr>", "Telescope live grep" },
+		b = { ":Telescope buffers theme=dropdown<cr>", "Telescope buffers" },
+		g = { ":Telescope git_files theme=dropdown<cr>", "Telescope git files" },
+		s = { ":Telescope grep_string theme=dropdown<cr>", "Telescope grep string" },
+		c = { ":Telescope git_commits theme=dropdown<cr>", "Telescope git commits" },
+	},
 	o = {
 		name = "Open",
 		n = { ":Explore<cr>", "Open Netrw" },
