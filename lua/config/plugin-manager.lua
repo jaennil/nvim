@@ -34,7 +34,7 @@ require("lazy").setup({
 		event = "VeryLazy",
 		init = function()
 			vim.o.timeout = true
-			vim.o.timeoutlen = 700
+			vim.o.timeoutlen = 600
 		end,
 		opts = {
 			-- your configuration comes here
@@ -52,8 +52,13 @@ require("lazy").setup({
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
-    {
-    'nvim-telescope/telescope.nvim', tag = '0.1.2',
-      dependencies = { 'nvim-lua/plenary.nvim' }
-    }
+	{
+		'nvim-telescope/telescope.nvim',
+		tag = '0.1.2',
+		dependencies = { 'nvim-lua/plenary.nvim' }
+	},
+	{
+		'm4xshen/autoclose.nvim',
+		config = function() require("autoclose").setup() end
+	},
 })
