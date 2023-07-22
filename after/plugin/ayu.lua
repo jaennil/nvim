@@ -7,7 +7,9 @@ local bright_green = "#aaf94c"
 local pink = "#ff66c4"
 local yellow = "#ffff00"
 
-require('ayu').setup({
+local ayu = require("ayu")
+
+ayu.setup({
 	overrides = {
 		Normal        = { bg = black },
 		-- function name
@@ -21,10 +23,7 @@ require('ayu').setup({
 		Conditional   = { fg = purple },
 		String        = { fg = bright_green },
 		['@variable'] = { fg = pink },
+		SignColumn = { bg = black },
 	}
 })
-require('ayu').colorscheme()
-vim.cmd([[
-  highlight SignColumn guibg='#000000'
-  highlight SignColumnSB guibg='#000000'
-]])
+ayu.colorscheme()
