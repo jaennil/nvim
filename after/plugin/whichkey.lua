@@ -32,7 +32,7 @@ wk.register({
 		name = "Open",
 		n = { ":Explore<cr>", "Open Netrw" },
 		r = { "<Plug>(coc-references)", "References of element under cursor" },
-		d = { "<Plug>(<C-u>CocList diagnostics<cr>", "Open Diagnostics" },
+		d = { ":<C-u>CocList diagnostics<cr>", "Open Diagnostics" },
 	},
 	c = {
 		name = "Code",
