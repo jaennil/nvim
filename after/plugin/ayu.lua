@@ -6,6 +6,7 @@ local purple = "#ac64fb"
 local bright_green = "#aaf94c"
 local pink = "#ff66c4"
 local yellow = "#ffff00"
+local gray = "#1f1f1f"
 
 local ayu = require("ayu")
 
@@ -24,6 +25,9 @@ ayu.setup({
 		String        = { fg = bright_green },
 		['@variable'] = { fg = pink },
 		SignColumn = { bg = black },
+		Conceal = {},
+		CocUnusedHighlight = {},
+		DiagnosticUnnecessary = { bg = gray },
 	}
 })
 ayu.colorscheme()
