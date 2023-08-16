@@ -7,6 +7,8 @@ local bright_green = "#aaf94c"
 local pink = "#ff66c4"
 local yellow = "#ffff00"
 local gray = "#1f1f1f"
+local blue = "#0000ff"
+local white = "#ffffff"
 
 local ayu = require("ayu")
 
@@ -21,13 +23,15 @@ ayu.setup({
 		-- imports
 		PreProc       = { fg = brown },
 		Constant      = { fg = green },
-		Conditional   = { fg = purple },
+		Conditional   = { fg = blue },
 		String        = { fg = bright_green },
 		['@variable'] = { fg = pink },
+		['@parameter'] = { fg = purple },
 		SignColumn = { bg = black },
 		Conceal = {},
 		CocUnusedHighlight = {},
 		DiagnosticUnnecessary = { bg = gray },
+		Delimiter = { fg = white }
 	}
 })
 ayu.colorscheme()
