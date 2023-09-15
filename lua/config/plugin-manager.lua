@@ -15,6 +15,7 @@ require("lazy").setup({
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
+		-- enable = false,
 	},
 	{
 		"christoomey/vim-tmux-navigator",
@@ -27,7 +28,7 @@ require("lazy").setup({
 	},
 	{ 'numToStr/Comment.nvim' },
 	{ "mbbill/undotree" },
-	{ "eandrju/cellular-automaton.nvim" },
+	-- { "eandrju/cellular-automaton.nvim" },
 	{ "tpope/vim-fugitive" },
 	{
 		"folke/which-key.nvim",
@@ -57,8 +58,24 @@ require("lazy").setup({
 		tag = '0.1.2',
 		dependencies = { 'nvim-lua/plenary.nvim' }
 	},
-	{
-		'm4xshen/autoclose.nvim',
-		config = function() require("autoclose").setup() end
-	},
+	-- {
+	-- 	'm4xshen/autoclose.nvim',
+	-- 	enable=false,
+	-- 	config = function() require("autoclose").setup() end
+	-- },
+	-- {
+	-- 	'glacambre/firenvim',
+	--
+	-- 	lazy = not vim.g.started_by_firenvim,
+	-- 	build = function()
+	-- 		vim.fn["firenvim#install"](0)
+	-- 	end
+	-- },
+	-- {
+	-- 	'andymass/vim-matchup',
+	-- 	setup = function()
+	-- 		vim.g.matchup_matchparen_offscreen = { method = "popup" }
+	-- 	end,
+	-- },
+
 })

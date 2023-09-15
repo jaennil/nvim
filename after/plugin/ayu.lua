@@ -14,24 +14,25 @@ local ayu = require("ayu")
 
 ayu.setup({
 	overrides = {
-		Normal        = { bg = black },
+		Normal                = { bg = black },
 		-- function name
-		Function      = { fg = yellow },
+		Function              = { fg = yellow },
 		-- special words like require
-		Special       = { fg = red_orange },
-		Statement     = { fg = red_orange },
+		Special               = { fg = red_orange },
+		Statement             = { fg = red_orange },
 		-- imports
-		PreProc       = { fg = brown },
-		Constant      = { fg = green },
-		Conditional   = { fg = blue },
-		String        = { fg = bright_green },
-		['@variable'] = { fg = pink },
-		['@parameter'] = { fg = purple },
-		SignColumn = { bg = black },
-		Conceal = {},
-		CocUnusedHighlight = {},
+		PreProc               = { fg = brown },
+		Constant              = { fg = green },
+		Conditional           = { fg = blue },
+		String                = { fg = bright_green },
+		['@variable']         = { fg = pink },
+		['@parameter']        = { fg = purple },
+		['@']        = { fg = purple },
+		SignColumn            = { bg = black },
+		Conceal               = {},
+		CocUnusedHighlight    = {},
 		DiagnosticUnnecessary = { bg = gray },
-		Delimiter = { fg = white }
+		Delimiter             = { fg = white }
 	}
 })
 ayu.colorscheme()
