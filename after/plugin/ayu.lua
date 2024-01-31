@@ -36,3 +36,5 @@ ayu.setup({
 	}
 })
 ayu.colorscheme()
+
+vim.cmd [[ highlight WinSeparator guibg=None ]]
