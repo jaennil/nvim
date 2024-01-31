@@ -29,6 +29,13 @@ require("lazy").setup({
 	{ 'numToStr/Comment.nvim' },
 	{ "mbbill/undotree" },
 	-- { "eandrju/cellular-automaton.nvim" },
+
+	-- debugging 
+	{ "mfussenegger/nvim-dap" },
+	{ "rcarriga/nvim-dap-ui" },
+	{ "leoluz/nvim-dap-go" },
+	{ "folke/neodev.nvim", opts = {} },
+
 	{ "tpope/vim-fugitive" },
 	{
 		"folke/which-key.nvim",
