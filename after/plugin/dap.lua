@@ -1,6 +1,8 @@
-require("dapui").setup()
+local dap = require("dap")
+local dapui = require("dapui")
 
-local dap, dapui = require("dap"), require("dapui")
+dapui.setup()
+
 dap.listeners.before.attach.dapui_config = function()
   dapui.open()
 end
@@ -13,3 +15,20 @@ end
 dap.listeners.before.event_exited.dapui_config = function()
   dapui.close()
 end
+
+dap.adapters.coreclr = {
+  type = 'executable',
+  command = '/usr/local/netcoredbg',
+  args = {'--interpreter=vscode'}
+}
+
+dap.configurations.cs = {
+  {
+    type = "coreclr",
+    name = "launch - netcoredbg",
+    request = "launch",
+    program = function()
+        return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+    end,
+  },
+}
