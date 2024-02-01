@@ -22,6 +22,7 @@ require("lazy").setup({
 		lazy = false,
 	},
 	{ "neovim/nvim-lspconfig" },
+	{ "OmniSharp/omnisharp-vim" },
 	{
 		'neoclide/coc.nvim',
 		branch = 'release'
