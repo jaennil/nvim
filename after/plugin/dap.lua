@@ -102,13 +102,24 @@ dap.adapters.coreclr = {
 	args = { '--interpreter=vscode' }
 }
 
+-- dap.configurations.cs = {
+-- 	{
+-- 		type = "coreclr",
+-- 		name = "launch - netcoredbg",
+-- 		request = "launch",
+-- 		program = function()
+-- 			return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+-- 		end,
+-- 	},
+-- }
+
 dap.configurations.cs = {
 	{
 		type = "coreclr",
-		name = "launch - netcoredbg",
-		request = "launch",
-		program = function()
-			return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
-		end,
-	},
+		name = "attach - netcoredbg",
+		request = "attach",
+		processId = function()
+			return vim.fn.input('number')
+		end
+	}
 }
