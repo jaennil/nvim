@@ -91,4 +91,5 @@ wk.register({
 		d = { "<Plug>(coc-definition)", "Jump to definition" },
 		i = { "<Plug>(coc-implementation)", "Jump to implementation" },
 	},
+	n = { ":NERDTreeToggle<CR>", "Open Nerd Tree" },
 }, { prefix = "<leader>" })
