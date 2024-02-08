@@ -22,6 +22,7 @@ require("lazy").setup({
 		lazy = false,
 	},
 	{ "neovim/nvim-lspconfig" },
+	{ "udalov/kotlin-vim" },
 	{ "OmniSharp/omnisharp-vim" },
 	{
 		'neoclide/coc.nvim',
