@@ -30,3 +30,4 @@ lspconfig.html.setup {}
 --   end,
 -- })
 lspconfig.tsserver.setup {}
+lspconfig.csharp_ls.setup{}
