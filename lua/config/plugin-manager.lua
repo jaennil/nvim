@@ -17,6 +17,7 @@ require("lazy").setup({
 		build = ":TSUpdate",
 		-- enable = false,
 	},
+	{ "CRAG666/code_runner.nvim", config = true },
 	{
 		"christoomey/vim-tmux-navigator",
 		lazy = false,
@@ -32,11 +33,11 @@ require("lazy").setup({
 	{ "mbbill/undotree" },
 	-- { "eandrju/cellular-automaton.nvim" },
 
-	-- debugging 
+	-- debugging
 	{ "mfussenegger/nvim-dap" },
 	{ "rcarriga/nvim-dap-ui" },
 	{ "leoluz/nvim-dap-go" },
-	{ "folke/neodev.nvim", opts = {} },
+	{ "folke/neodev.nvim",    opts = {} },
 
 	{ "tpope/vim-fugitive" },
 	{

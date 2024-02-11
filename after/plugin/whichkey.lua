@@ -55,6 +55,7 @@ wk.register({
 	},
 	c = {
 		name = "Code",
+		r = { ":RunCode<CR>", "Run" },
 		a = {
 			name = "Action",
 			f = { "<Plug>(coc-codeaction-source)", "File Code Action" },
