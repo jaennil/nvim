@@ -69,6 +69,7 @@ require("lazy").setup({
 		dependencies = { 'nvim-lua/plenary.nvim' }
 	},
 	{ "preservim/nerdtree" },
+	{ "chentoast/marks.nvim" },
 	-- {
 	-- 	'm4xshen/autoclose.nvim',
 	-- 	enable=false,
