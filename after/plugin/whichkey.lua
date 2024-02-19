@@ -41,6 +41,7 @@ wk.register({
 			name = "Toggle",
 			b = { ":lua require'dap'.toggle_breakpoint()<CR>", "Breakpoint" },
 		},
+		c = { ":lua require'dapui'.close()<CR>", "Close Dapui" },
 		s = { ":lua require'dap'.disconnect()<CR>", "Stop" },
 		-- s = {
 		-- 	name = "Set",
