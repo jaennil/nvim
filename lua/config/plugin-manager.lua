@@ -35,6 +35,7 @@ require("lazy").setup({
 
 	-- debugging
 	{ "mfussenegger/nvim-dap" },
+	{ "theHamsta/nvim-dap-virtual-text" },
 	{ "rcarriga/nvim-dap-ui" },
 	{ "leoluz/nvim-dap-go" },
 	{
