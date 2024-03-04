@@ -11,10 +11,12 @@ vim.opt.writebackup = false
 vim.opt.signcolumn = "yes"
 vim.g.netrw_banner = false
 vim.api.nvim_set_option("clipboard","unnamed")
-vim.opt.swapfile = false
+-- vim.opt.swapfile = false
 -- vim.cmd([[let w:m1=matchadd('Error', '\%>80v.\+', -1)]])
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 -- vim.cmd([[filetype plugin indent on]])
 -- vim.opt.laststatus = 3
 vim.g.NERDTreeWinPos = "right"
+-- center cursor vertically
+-- set scrolloff = 999
