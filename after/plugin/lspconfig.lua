@@ -31,3 +31,5 @@ lspconfig.html.setup {}
 -- })
 lspconfig.tsserver.setup {}
 lspconfig.csharp_ls.setup{}
+lspconfig.java_language_server.setup{}
+lspconfig.phpactor.setup{}
