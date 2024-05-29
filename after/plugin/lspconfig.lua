@@ -33,3 +33,4 @@ lspconfig.tsserver.setup {}
 lspconfig.csharp_ls.setup {}
 lspconfig.jdtls.setup{}
 lspconfig.phpactor.setup {}
+lspconfig.rust_analyzer.setup {}
