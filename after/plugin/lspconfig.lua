@@ -31,6 +31,9 @@ lspconfig.html.setup {}
 -- })
 lspconfig.tsserver.setup {}
 lspconfig.csharp_ls.setup {}
-lspconfig.jdtls.setup{}
+-- lspconfig.jdtls.setup{}
+lspconfig.java_language_server.setup {
+	cmd = { "/home/jaennil/.local/share/nvim/mason/bin/java-language-server" }
+}
 lspconfig.phpactor.setup {}
 lspconfig.rust_analyzer.setup {}
