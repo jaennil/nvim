@@ -50,7 +50,6 @@ wk.register({
 	},
 	o = {
 		name = "Open",
-		n = { ":Explore<cr>", "Open Netrw" },
 		r = { "<Plug>(coc-references)", "References of element under cursor" },
 		d = { ":<C-u>CocList diagnostics<cr>", "Open Diagnostics" },
 	},
@@ -93,5 +92,5 @@ wk.register({
 		d = { "<Plug>(coc-definition)", "Jump to definition" },
 		i = { "<Plug>(coc-implementation)", "Jump to implementation" },
 	},
-	n = { ":NERDTreeToggle<CR>", "Open Nerd Tree" },
+	n = { ":lua require('yazi').yazi()<cr>", "Open Yazi" },
 }, { prefix = "<leader>" })

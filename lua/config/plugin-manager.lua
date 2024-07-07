@@ -36,7 +36,7 @@ require("lazy").setup({
 	-- debugging
 	{ "mfussenegger/nvim-dap" },
 	{ "theHamsta/nvim-dap-virtual-text" },
-	{ "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} },
+	{ "rcarriga/nvim-dap-ui",           dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
 	{ "leoluz/nvim-dap-go" },
 	{
 		"ray-x/go.nvim",
@@ -83,7 +83,6 @@ require("lazy").setup({
 		tag = '0.1.2',
 		dependencies = { 'nvim-lua/plenary.nvim' }
 	},
-	{ "preservim/nerdtree" },
 	{ "chentoast/marks.nvim" },
 	{
 		'akinsho/flutter-tools.nvim',
@@ -113,5 +112,32 @@ require("lazy").setup({
 	-- 		vim.g.matchup_matchparen_offscreen = { method = "popup" }
 	-- 	end,
 	-- },
-
+	---@type LazySpec
+	{
+		"mikavilpas/yazi.nvim",
+		event = "VeryLazy",
+		keys = {
+			-- 👇 in this section, choose your own keymappings!
+			{
+				"<leader>-",
+				function()
+					require("yazi").yazi()
+				end,
+				desc = "Open the file manager",
+			},
+			{
+				-- Open in the current working directory
+				"<leader>cw",
+				function()
+					require("yazi").yazi(nil, vim.fn.getcwd())
+				end,
+				desc = "Open the file manager in nvim's working directory",
+			},
+		},
+		---@type YaziConfig
+		opts = {
+			-- if you want to open yazi instead of netrw, see below for more info
+			open_for_directories = false,
+		},
+	}
 })
