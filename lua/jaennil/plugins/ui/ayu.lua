@@ -18,6 +18,7 @@ return { {
     init = function()
 	vim.cmd.colorscheme 'ayu'
 	vim.cmd.hi "WinSeparator guibg=None"
+	vim.cmd.hi "StatusLine guibg=None"
     end,
     opts = {
 	overrides = {
