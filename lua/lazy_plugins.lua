@@ -45,10 +45,6 @@ require("lazy").setup({
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 600
-		end,
 		opts = {
 			-- your configuration comes here
 			-- or leave it empty to use the default settings
@@ -109,6 +105,6 @@ require("lazy").setup({
 			-- if you want to open yazi instead of netrw, see below for more info
 			open_for_directories = true,
 		},
-	}
+	},
 
 })
