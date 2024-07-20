@@ -55,7 +55,10 @@ require("lazy").setup({
 			-- refer to the configuration section below
 		}
 	},
-	{ "shatur/neovim-ayu" },
+	{ "shatur/neovim-ayu",
+	    lazy = false,
+	    priority = 1000,
+	},
 	{ "norcalli/nvim-colorizer.lua" },
 	{
 		"williamboman/mason.nvim",
