@@ -1,4 +1,4 @@
-return { {
+return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     lazy = false,
@@ -20,4 +20,4 @@ return { {
 	require('nvim-treesitter.install').prefer_git = true
 	require('nvim-treesitter.configs').setup(opts)
     end,
-} }
+}

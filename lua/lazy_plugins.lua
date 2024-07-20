@@ -21,4 +21,5 @@ require("lazy").setup({
     -- monaqa/dial.nvim
     -- nvim-tree/nvim-web-devicons
     -- j-hui/fidget.nvim
+    -- luckasRanarison/clear-action.nvim
 })

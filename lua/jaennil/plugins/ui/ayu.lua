@@ -10,7 +10,7 @@ local gray = "#1f1f1f"
 local blue = "#0000ff"
 local white = "#ffffff"
 
-return { {
+return {
     "shatur/neovim-ayu",
     lazy = false,
     priority = 1000,
@@ -44,4 +44,4 @@ return { {
 	    Delimiter             = { fg = white },
 	},
     },
-} }
+}
