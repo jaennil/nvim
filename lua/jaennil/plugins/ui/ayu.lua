@@ -19,6 +19,7 @@ return { {
 	vim.cmd.colorscheme 'ayu'
 	vim.cmd.hi "WinSeparator guibg=None"
 	vim.cmd.hi "StatusLine guibg=None"
+	vim.cmd.hi "StatusLineNC guibg=None"
     end,
     opts = {
 	overrides = {
