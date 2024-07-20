@@ -18,79 +18,49 @@ local function source_file()
 	print("file sourced " .. time.hour .. ':' .. time.min .. ':' .. time.sec)
 end
 
-wk.register({
-	["<F5>"] = { ":lua require'dap'.continue()<CR>", "Debug Continue" },
-	["<F10>"] = { ":lua require'dap'.step_over()<CR>", "Debug Step Over" },
-	["<F11>"] = { ":lua require'dap'.step_into()<CR>", "Debug Step Into" },
-	["<F12>"] = { ":lua require'dap'.step_out()<CR>", "Debug Step Out" },
+wk.add({
+    { "<F5>", "<CMD>lua require'dap'.continue()<CR>", desc="Debug Continue" },
+    {"<F10>", ":lua require'dap'.step_over()<CR>", desc="Debug Step Over" },
+    {"<F11>", ":lua require'dap'.step_into()<CR>", desc="Debug Step Into" },
+    {"<F12>", ":lua require'dap'.step_out()<CR>", desc="Debug Step Out" },
 })
 
-wk.register({
-	t = {
-		name = "Telescope",
-		f = { ":Telescope find_files theme=dropdown<cr>", "Telescope find files" },
-		l = { ":Telescope live_grep theme=dropdown<cr>", "Telescope live grep" },
-		b = { ":Telescope buffers theme=dropdown<cr>", "Telescope buffers" },
-		g = { ":Telescope git_files theme=dropdown<cr>", "Telescope git files" },
-		s = { ":Telescope grep_string theme=dropdown<cr>", "Telescope grep string" },
-		c = { ":Telescope git_commits theme=dropdown<cr>", "Telescope git commits" },
-	},
-	d = {
-		name = "Debug",
-		t = {
-			name = "Toggle",
-			b = { ":lua require'dap'.toggle_breakpoint()<CR>", "Breakpoint" },
-		},
-		c = { ":lua require'dapui'.close()<CR>", "Close Dapui" },
-		s = { ":lua require'dap'.disconnect()<CR>", "Stop" },
-		-- s = {
-		-- 	name = "Set",
-		-- 	b = { ":lua 
-		-- },
-	},
-	o = {
-		name = "Open",
-		r = { "<Plug>(coc-references)", "References of element under cursor" },
-		d = { ":<C-u>CocList diagnostics<cr>", "Open Diagnostics" },
-	},
-	c = {
-		name = "Code",
-		r = { ":RunCode<CR>", "Run" },
-		a = {
-			name = "Action",
-			f = { "<Plug>(coc-codeaction-source)", "File Code Action" },
-			c = { "<Plug>(coc-codeaction-cursor)", "Cursor Code Action" },
-			s = { "<Plug>(coc-codeaction-selected)", "Selected Code Action" },
-		},
-	},
-	f = {
-		name = "File",
-		f = { ":Format<cr>", "Format File" },
-		s = { source_file, "Source File" },
-	},
-	g = {
-		name = "Git",
-		s = { ":Git<cr>G", "Git Status" },
-		p = { ":Git push<cr>", "Git Push" },
-	},
-	r = { "<Plug>(coc-rename)", "Rename" },
-	s = {
-		name = "Show",
-		d = { show_docs, "Show Documentation" },
-	},
-	u = { vim.cmd.UndotreeToggle, "Unto Tree Toggle" },
-	j = {
-		name = "Jump to",
-		p = {
-			name = "Previous",
-			d = { "<Plug>(coc-diagnostic-prev)", "Jump to prev diagnostic" },
-		},
-		n = {
-			name = "Next",
-			d = { "<Plug>(coc-diagnostic-next)", "Jump to next diagnostic" },
-		},
-		d = { "<Plug>(coc-definition)", "Jump to definition" },
-		i = { "<Plug>(coc-implementation)", "Jump to implementation" },
-	},
-	n = { ":lua require('yazi').yazi()<cr>", "Open Yazi" },
-}, { prefix = "<leader>" })
+-- TODO: add modes; fix overlaping mappings
+wk.add({
+    { "<leader>t", group = "Telescope" },
+	{ "<leader>tf", "<CMD>Telescope find_files theme=dropdown<CR>", desc="Telescope find files" },
+	{ "<leader>tl", "<CMD>Telescope live_grep theme=dropdown<CR>", desc="Telescope live grep" },
+	{ "<leader>tb", "<CMD>Telescope buffers theme=dropdown<CR>", desc="Telescope buffers" },
+	{ "<leader>tg", "<CMD>Telescope git_files theme=dropdown<CR>", desc="Telescope git files" },
+	{ "<leader>ts", "<CMD>Telescope grep_string theme=dropdown<CR>", desc="Telescope grep string" },
+	{ "<leader>tc", "<CMD>Telescope git_commits theme=dropdown<CR>", desc="Telescope git commits" },
+    { "<leader>d", group = "Debug" },
+	{ "<leader>dt", "<CMD>lua require'dap'.toggle_breakpoint()<CR>", desc = "Toggle breakpoint" },
+	{ "<leader>dc", "<CMD>lua require'dapui'.close()<CR>", desc="Close Dapui" },
+	{ "<leader>ds", "<CMD>lua require'dap'.disconnect()<CR>", desc="Stop" },
+    { "<leader>o", group = "Open" },
+	{ "<leader>or", "<Plug>(coc-references)", desc="References of element under cursor" },
+	{ "<leader>od", ":<C-u>CocList diagnostics<cr>", desc="Open Diagnostics" },
+    { "<leader>c", group = "Code" },
+	{ "<leader>cr", "<CMD>RunCode<CR>", desc="Run" },
+	{ "<leader>ca", group = "Code Action" },
+	    { "<leader>caf", "<Plug>(coc-codeaction-source)", desc="File Code Action" },
+	    { "<leader>cac", "<Plug>(coc-codeaction-cursor)", desc="Cursor Code Action" },
+	    { "<leader>cas", "<Plug>(coc-codeaction-selected)", desc="Selected Code Action" },
+    { "<leader>f", group = "File" },
+	{ "<leader>ff", "<CMD>Format<CR>", desc="Format File" },
+	{ "<leader>fs",  source_file, desc="Source File" },
+    { "<leader>g", group = "Git" },
+	{ "<leader>gs", "<CMD>Git<CR>G", desc="Git Status" },
+	{ "<leader>gp", "<CMD>Git push<CR>", desc="Git Push" },
+    { "<leader>r", "<Plug>(coc-rename)", desc="Rename" },
+    { "<leader>s", group = "Show" },
+	{ "<leader>sd", show_docs, desc="Show Documentation" },
+    { "<leader>u", vim.cmd.UndotreeToggle, desc="Unto Tree Toggle" },
+    { "<leader>j", group = "Jump to" },
+	{"<leader>jp", "<Plug>(coc-diagnostic-prev)", desc = "Jump to previous diagnostics" },
+	{"<leader>jn", "<Plug>(coc-diagnostic-next)", desc = "Jump to next diagnostics" },
+	{ "<leader>jd", "<Plug>(coc-definition)", desc="Jump to definition" },
+	{ "<leader>ji", "<Plug>(coc-implementation)", desc="Jump to implementation" },
+    { "<leader>n", "<CMD>lua require('yazi').yazi()<CR>", desc="Open Yazi" },
+})
