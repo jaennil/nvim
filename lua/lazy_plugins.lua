@@ -16,6 +16,7 @@ require("lazy").setup({
     require "jaennil/plugins/lspconfig",
 
     -- TODO
+    -- nvim-cmp
     -- smoka7/hop.nvim
     -- andymass/vim-matchup
     -- monaqa/dial.nvim
