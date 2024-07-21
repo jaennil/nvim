@@ -34,4 +34,4 @@ vim.opt.scrolloff = 10
 
 vim.opt.cmdheight = 0
 
-vim.opt.statusline = "%=%#StatusLineExtra#%F"
+vim.opt.statusline = "%m%=%#StatusLineExtra#%F"
