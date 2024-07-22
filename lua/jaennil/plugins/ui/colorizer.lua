@@ -1,6 +1,10 @@
-return {
+local M = {
     "norcalli/nvim-colorizer.lua",
-    config = function()
-	require"colorizer".setup()
-    end,
+    event = "VeryLazy",
 }
+
+M.config = function()
+    require"colorizer".setup()
+end
+
+return M

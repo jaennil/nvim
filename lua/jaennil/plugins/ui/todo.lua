@@ -1,5 +1,6 @@
 local M = {
-    "folke/todo-comments.nvim"
+    "folke/todo-comments.nvim",
+    event = "VeryLazy",
 }
 
 M.opts = {
