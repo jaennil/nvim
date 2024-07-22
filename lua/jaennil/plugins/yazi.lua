@@ -7,6 +7,7 @@ return {
 	-- use_ya_for_events_reading = true,
 	-- use_yazi_client_id_flag = true,
     },
+    event = "VeryLazy",
     keys = {
 	{
 	    "<leader>n",
