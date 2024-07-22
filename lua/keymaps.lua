@@ -11,12 +11,6 @@ vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower win
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
 
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won"t work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -25,4 +19,27 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     vim.highlight.on_yank()
   end,
+})
+
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+	local client = vim.lsp.get_client_by_id(args.data.client_id)
+	if client.supports_method('textDocument/implementation') then
+	    -- Create a keymap for vim.lsp.buf.implementation
+	end
+	if client.supports_method('textDocument/completion') then
+	    -- Enable auto-completion
+	    -- TODO: completion is nil for some reason
+	    -- vim.lsp.completion.enable(true, client.id, args.buf, {autotrigger = true})
+	end
+	if client.supports_method('textDocument/formatting') then
+	    -- Format the current buffer on save
+	    vim.api.nvim_create_autocmd('BufWritePre', {
+		buffer = args.buf,
+		callback = function()
+		    vim.lsp.buf.format({bufnr = args.buf, id = client.id})
+		end
+	    })
+	end
+    end
 })
