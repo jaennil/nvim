@@ -6,6 +6,7 @@ require("lazy").setup({
     -- ui
     require "jaennil/plugins/ui/ayu",
     require "jaennil/plugins/ui/colorizer",
+    require "jaennil/plugins/ui/todo",
 
     -- utils
     require "jaennil/plugins/yazi",
