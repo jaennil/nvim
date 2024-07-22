@@ -11,6 +11,7 @@ require("lazy").setup({
     require "jaennil/plugins/yazi",
     require "jaennil/plugins/fugitive",
     require "jaennil/plugins/undotree",
+    require "jaennil/plugins/fidget",
 
     -- lsp
     require "jaennil/plugins/lspconfig",
@@ -21,6 +22,5 @@ require("lazy").setup({
     -- andymass/vim-matchup
     -- monaqa/dial.nvim
     -- nvim-tree/nvim-web-devicons
-    -- j-hui/fidget.nvim
     -- luckasRanarison/clear-action.nvim
 })
