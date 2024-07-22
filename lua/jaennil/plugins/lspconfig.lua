@@ -1,7 +1,11 @@
-return {
+local M = {
     "neovim/nvim-lspconfig",
-    config = function()
-	local lspconfig = require("lspconfig")
-	lspconfig.rust_analyzer.setup {}
-    end,
+    event = { "BufReadPre", "BufNewFile" },
 }
+
+M.config = function()
+    local lspconfig = require("lspconfig")
+    lspconfig.rust_analyzer.setup {}
+end
+
+return M
