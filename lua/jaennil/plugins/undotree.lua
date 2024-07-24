@@ -8,6 +8,7 @@ M.keys = {
 
 M.config = function()
     vim.g.undotree_SetFocusWhenToggle = true
+    vim.g.undotree_WindowLayout = 3
 end
 
 return M
