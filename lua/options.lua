@@ -34,4 +34,16 @@ vim.opt.scrolloff = 10
 
 vim.opt.cmdheight = 0
 
-vim.opt.statusline = "%=%m%F"
+vim.opt.statusline = "%!v:lua.status_line()"
+
+function status_line()
+    local recording_register = vim.fn.reg_recording()
+    local right_align = "%="
+    local base = "%m%F"
+    if recording_register == "" then
+        return right_align .. base
+    else
+        return right_align .. "Recording @" .. recording_register .. " " .. base
+    end
+end
+
