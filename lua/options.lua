@@ -1,7 +1,9 @@
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- TODO
+vim.opt.hlsearch = false
+
+-- TODO:
 -- vim.opt.mouse = "a"
 
 vim.opt.tabstop = 8
