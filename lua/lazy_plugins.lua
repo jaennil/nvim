@@ -5,7 +5,7 @@ require("lazy").setup({
     require "jaennil/plugins/plenary",
 
     -- ui
-    require "jaennil/plugins/ui/ayu",
+    require "jaennil/plugins/ui/theme/ayu",
     require "jaennil/plugins/ui/colorizer",
     require "jaennil/plugins/ui/todo",
     require "jaennil/plugins/ui/fidget",
