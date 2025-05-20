@@ -11,32 +11,8 @@ vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" }
 
 vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking (copying) text",
-  group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
+  group = vim.api.nvim_create_augroup("highlight-on-yank", { clear = true }),
   callback = function()
     vim.highlight.on_yank()
   end,
-})
-
-vim.api.nvim_create_autocmd('LspAttach', {
-    callback = function(args)
-	local client = vim.lsp.get_client_by_id(args.data.client_id)
-	if client.supports_method('textDocument/implementation') then
-	    -- Create a keymap for vim.lsp.buf.implementation
-	end
-	if client.supports_method('textDocument/completion') then
-	    -- Enable auto-completion
-	    -- TODO: completion is nil for some reason
-	    -- vim.lsp.completion.enable(true, client.id, args.buf, {autotrigger = true})
-	end
-	if client.supports_method('textDocument/formatting') then
-	    -- Formatting
-	    vim.keymap.set("n",
-		"<leader>f",
-		function()
-		    vim.lsp.buf.format({bufnr = args.buf, id = client.id})
-		end,
-		{ desc = "Exit terminal mode" }
-	    )
-	end
-    end
 })
