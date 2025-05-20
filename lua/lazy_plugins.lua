@@ -18,6 +18,7 @@ require("lazy").setup({
 
     -- lsp
     require "jaennil/plugins/lspconfig",
+    require "jaennil/plugins/mason",
 
     -- TODO
     -- nvim-cmp
