@@ -48,3 +48,7 @@ function status_line()
     end
 end
 
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+    pattern = "*.axaml",
+    command = "set filetype=xml"
+})
