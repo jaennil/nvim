@@ -8,6 +8,7 @@ M.config = function()
     lspconfig.rust_analyzer.setup {}
     lspconfig.gopls.setup {}
     lspconfig.pyright.setup {}
+    lspconfig.lemminx.setup {}
     lspconfig.omnisharp.setup({
         cmd = { "OmniSharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
     })

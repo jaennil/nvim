@@ -1,0 +1,389 @@
+./lazy-lock.json
+{
+  "fidget.nvim": { "branch": "main", "commit": "d9ba6b7bfe29b3119a610892af67602641da778e" },
+  "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
+  "mason.nvim": { "branch": "main", "commit": "9eaedb864cdadc29c6eb7d761a6c0d8aee26c91b" },
+  "neovim-ayu": { "branch": "master", "commit": "f5da37a8ddd62fc3a7b28900c4d1b807a3582584" },
+  "nvim-colorizer.lua": { "branch": "master", "commit": "a065833f35a3a7cc3ef137ac88b5381da2ba302e" },
+  "nvim-lspconfig": { "branch": "master", "commit": "ac1dfbe3b60e5e23a2cff90e3bd6a3bc88031a57" },
+  "nvim-treesitter": { "branch": "master", "commit": "066fd6505377e3fd4aa219e61ce94c2b8bdb0b79" },
+  "plenary.nvim": { "branch": "master", "commit": "857c5ac632080dba10aae49dba902ce3abf91b35" },
+  "todo-comments.nvim": { "branch": "main", "commit": "304a8d204ee787d2544d8bc23cd38d2f929e7cc5" },
+  "undotree": { "branch": "master", "commit": "b951b87b46c34356d44aa71886aecf9dd7f5788a" },
+  "vim-fugitive": { "branch": "master", "commit": "4a745ea72fa93bb15dd077109afbb3d1809383f2" },
+  "vim-tmux-navigator": { "branch": "master", "commit": "81973db3b7856059d2fa0768d758dd14928bdda0" },
+  "yazi.nvim": { "branch": "main", "commit": "43abf4ea13156aa0a2a49f1978ee0d9b4c94088f" }
+}
+
+
+./lua/options.lua
+vim.opt.number = true
+vim.opt.relativenumber = true
+
+vim.opt.hlsearch = false
+
+-- TODO:
+-- vim.opt.mouse = "a"
+
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+vim.opt.expandtab = true
+
+vim.opt.termguicolors = true
+
+vim.opt.showmode = false
+
+vim.opt.undofile = true
+
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+vim.opt.signcolumn = "yes"
+
+vim.opt.updatetime = 2000
+
+vim.opt.list = true
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
+vim.opt.inccommand = "split"
+
+vim.opt.cursorline = true
+
+vim.opt.scrolloff = 10
+
+vim.opt.cmdheight = 0
+
+vim.opt.statusline = "%!v:lua.status_line()"
+
+function status_line()
+    local recording_register = vim.fn.reg_recording()
+    local right_align = "%="
+    local base = "%m%F"
+    if recording_register == "" then
+        return right_align .. base
+    else
+        return right_align .. "Recording @" .. recording_register .. " " .. base
+    end
+end
+
+
+
+./lua/jaennil/plugins/yazi.lua
+return {
+    "mikavilpas/yazi.nvim",
+    opts = {
+	open_for_directories = true,
+
+	-- enable this if you are using latest version of yazi
+	-- use_ya_for_events_reading = true,
+	-- use_yazi_client_id_flag = true,
+    },
+    event = "VeryLazy",
+    keys = {
+	{
+	    "<leader>n",
+	    function()
+		require("yazi").yazi()
+	    end,
+	    desc = "Open the yazi file manager",
+	},
+    },
+}
+
+
+./lua/jaennil/plugins/undotree.lua
+local M = {
+    "mbbill/undotree",
+}
+
+M.keys = {
+    { "<leader>u", vim.cmd.UndotreeToggle, desc = "Undo tree toggle" },
+}
+
+M.config = function()
+    vim.g.undotree_SetFocusWhenToggle = true
+    vim.g.undotree_WindowLayout = 3
+end
+
+return M
+
+
+./lua/jaennil/plugins/mason.lua
+local M = {
+    "mason-org/mason.nvim"
+}
+
+M.config = function()
+    local mason = require("mason")
+    mason.setup()
+end
+
+return M
+
+
+./lua/jaennil/plugins/fugitive.lua
+return {
+    "tpope/vim-fugitive",
+    keys = {
+	{ "<leader>gs", "<CMD>Git<CR>G", desc = "Git Status"},
+	{ "<leader>gp", "<CMD>Git push<CR>", desc = "Git Push"},
+    },
+}
+
+
+./lua/jaennil/plugins/treesitter.lua
+local M = {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    event = { "BufReadPost", "BufNewFile" },
+}
+
+M.opts = {
+    ensure_installed = { "bash", "diff", "lua", "markdown", "rust", "go" },
+    sync_install = false,
+    auto_install = true,
+    ignore_install = { },
+    highlight = {
+	enable = true,
+	disable = { },
+	additional_vim_regex_highlighting = false,
+    },
+    indent = {
+	enable = true,
+    },
+}
+
+M.config = function(_, opts)
+    require('nvim-treesitter.install').prefer_git = true
+    require('nvim-treesitter.configs').setup(opts)
+end
+
+return M
+
+
+./lua/jaennil/plugins/ui/fidget.lua
+local M = {
+    "j-hui/fidget.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+}
+
+M.opts = {
+
+}
+
+return M
+
+
+./lua/jaennil/plugins/ui/theme/ayu.lua
+local red_orange = "#ff4f00"
+local black = "#000000"
+local green = "#00ff00"
+local brown = "#f4a460"
+local purple = "#ac64fb"
+local bright_green = "#aaf94c"
+local pink = "#ff56c4"
+local yellow = "#ffff00"
+local gray = "#1f1f1f"
+local blue = "#0060ff"
+local white = "#ffffff"
+
+local M = {
+    "shatur/neovim-ayu",
+    lazy = false,
+    priority = 1000,
+    main = "ayu",
+}
+
+M.init = function()
+	vim.cmd.colorscheme 'ayu'
+	vim.cmd.hi "WinSeparator guibg=None"
+	vim.cmd.hi "StatusLine guibg=None"
+	vim.cmd.hi "StatusLineNC guibg=None"
+end
+
+M.opts = {
+	overrides = {
+	    Normal                = { bg = black },
+	    Function              = { fg = yellow },
+	    -- keywords like require
+	    Special               = { fg = red_orange },
+	    Statement             = { fg = red_orange },
+	    -- imports
+	    PreProc               = { fg = brown },
+        ['@module']           = { fg = brown },
+	    -- Constant              = { fg = green },
+	    Conditional           = { fg = blue },
+	    String                = { fg = bright_green },
+	    ['@variable']         = { fg = white },
+        Type                  = { fg = green },
+	    ['@property']         = { fg = pink },
+	    ['@variable.member']         = { fg = purple },
+	    -- ['@parameter']        = { fg = blue },
+	    ['@lsp.type.parameter']        = { fg = blue },
+	    -- ['@']        = { fg = purple },
+	    SignColumn            = { bg = black },
+	    Conceal               = {},
+	    CocUnusedHighlight    = {},
+	    DiagnosticUnnecessary = { bg = gray },
+	    Delimiter             = { fg = white },
+	},
+}
+
+return M;
+
+
+./lua/jaennil/plugins/ui/colorizer.lua
+local M = {
+    "norcalli/nvim-colorizer.lua",
+    event = "VeryLazy",
+}
+
+M.config = function()
+    require"colorizer".setup()
+end
+
+return M
+
+
+./lua/jaennil/plugins/ui/todo.lua
+local M = {
+    "folke/todo-comments.nvim",
+    event = "VeryLazy",
+}
+
+M.opts = {
+
+}
+
+return M
+
+
+./lua/jaennil/plugins/tmux.lua
+local M = {
+    "christoomey/vim-tmux-navigator",
+}
+
+M.keys = {
+    { "<C-h>", "<CMD><C-U>TmuxNavigateLeft<CR>" },
+    { "<C-j>", "<CMD><C-U>TmuxNavigateDown<CR>" },
+    { "<C-k>", "<CMD><C-U>TmuxNavigateUp<CR>" },
+    { "<C-l>", "<CMD><C-U>TmuxNavigateRight<CR>" },
+}
+
+return M
+
+
+./lua/jaennil/plugins/plenary.lua
+local M = {
+    "nvim-lua/plenary.nvim",
+    lazy = true,
+}
+
+return M
+
+
+./lua/jaennil/plugins/lspconfig.lua
+local M = {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+}
+
+M.config = function()
+    local lspconfig = require("lspconfig")
+    lspconfig.rust_analyzer.setup {}
+    lspconfig.gopls.setup {}
+    lspconfig.pyright.setup {}
+    lspconfig.omnisharp.setup({
+        cmd = { "OmniSharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+    })
+end
+
+return M
+
+
+./lua/keymaps.lua
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
+vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { desc = "Rename" })
+vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, { desc = "Open diagnostics float" })
+
+vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
+vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Highlight when yanking (copying) text",
+  group = vim.api.nvim_create_augroup("highlight-on-yank", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
+
+./lua/lazy_plugins.lua
+require("lazy").setup({
+
+    -- general
+    require "jaennil/plugins/treesitter",
+    require "jaennil/plugins/plenary",
+
+    -- ui
+    require "jaennil/plugins/ui/theme/ayu",
+    require "jaennil/plugins/ui/colorizer",
+    require "jaennil/plugins/ui/todo",
+    require "jaennil/plugins/ui/fidget",
+
+    -- utils
+    require "jaennil/plugins/yazi",
+    require "jaennil/plugins/fugitive",
+    require "jaennil/plugins/undotree",
+    require "jaennil/plugins/tmux",
+
+    -- lsp
+    require "jaennil/plugins/lspconfig",
+    require "jaennil/plugins/mason",
+
+    -- TODO
+    -- nvim-cmp
+    -- smoka7/hop.nvim
+    -- andymass/vim-matchup
+    -- monaqa/dial.nvim
+    -- nvim-tree/nvim-web-devicons
+    -- luckasRanarison/clear-action.nvim
+    -- folke/persistence.nvim
+})
+
+
+./lua/lazy_bootstrap.lua
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+vim.opt.rtp:prepend(lazypath)
+
+
+./init.lua
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+vim.g.have_nerd_font = true
+
+require 'options'
+require 'keymaps'
+require 'lazy_bootstrap'
+require 'lazy_plugins'
+
+
