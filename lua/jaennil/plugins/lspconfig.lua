@@ -4,13 +4,12 @@ local M = {
 }
 
 M.config = function()
-    local lspconfig = require("lspconfig")
-    lspconfig.rust_analyzer.setup {}
-    lspconfig.gopls.setup {}
-    lspconfig.pyright.setup {}
-    lspconfig.lemminx.setup {}
-    lspconfig.omnisharp.setup({
-        cmd = { "OmniSharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+    vim.lsp.enable({
+        "rust_analyzer",
+        "gopls",
+        "pyright",
+        "lemminx",
+        "omnisharp",
     })
 end
 
