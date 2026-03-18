@@ -13,6 +13,7 @@ require("lazy").setup({
     -- utils
     require "jaennil/plugins/yazi",
     require "jaennil/plugins/fugitive",
+    require "jaennil/plugins/gitsigns",
     require "jaennil/plugins/undotree",
     require "jaennil/plugins/tmux",
 
