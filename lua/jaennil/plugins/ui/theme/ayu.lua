@@ -14,14 +14,14 @@ local M = {
     "shatur/neovim-ayu",
     lazy = false,
     priority = 1000,
-    main = "ayu",
 }
 
-M.init = function()
-	vim.cmd.colorscheme 'ayu'
-	vim.cmd.hi "WinSeparator guibg=None"
-	vim.cmd.hi "StatusLine guibg=None"
-	vim.cmd.hi "StatusLineNC guibg=None"
+M.config = function(_, opts)
+    require('ayu').setup(opts)
+    vim.cmd.colorscheme 'ayu'
+    vim.cmd.hi "WinSeparator guibg=None"
+    vim.cmd.hi "StatusLine guibg=None"
+    vim.cmd.hi "StatusLineNC guibg=None"
 end
 
 M.opts = {
