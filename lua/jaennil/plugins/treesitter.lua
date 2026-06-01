@@ -5,7 +5,7 @@ local M = {
 }
 
 M.opts = {
-    ensure_installed = { "bash", "diff", "lua", "markdown", "rust", "go" },
+    ensure_installed = { "bash", "diff", "lua", "markdown", "markdown_inline", "rust", "go" },
     sync_install = false,
     auto_install = true,
     ignore_install = {},
