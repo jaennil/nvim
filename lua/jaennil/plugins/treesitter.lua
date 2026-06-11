@@ -21,15 +21,20 @@ M.opts = {
 
 M.config = function(_, opts)
     local treesitter = require("nvim-treesitter")
+    local can_install = vim.fn.executable("tree-sitter") == 1
 
     if type(treesitter.install) ~= "function" then
+        opts.auto_install = can_install
         require("nvim-treesitter.install").prefer_git = true
         require("nvim-treesitter.configs").setup(opts)
         return
     end
 
     treesitter.setup()
-    treesitter.install(opts.ensure_installed)
+
+    if can_install then
+        treesitter.install(opts.ensure_installed)
+    end
 
     vim.api.nvim_create_autocmd("FileType", {
         group = vim.api.nvim_create_augroup("jaennil-treesitter", { clear = true }),
