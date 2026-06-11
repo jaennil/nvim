@@ -22,6 +22,12 @@ M.opts = {
 M.config = function(_, opts)
     local treesitter = require("nvim-treesitter")
 
+    if type(treesitter.install) ~= "function" then
+        require("nvim-treesitter.install").prefer_git = true
+        require("nvim-treesitter.configs").setup(opts)
+        return
+    end
+
     treesitter.setup()
     treesitter.install(opts.ensure_installed)
 
