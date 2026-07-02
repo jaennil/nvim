@@ -1,10 +1,12 @@
 local M = {
-    "mason-org/mason.nvim"
+    "mason-org/mason-lspconfig.nvim",
+    dependencies = {
+        { "mason-org/mason.nvim", opts = {} },
+        "neovim/nvim-lspconfig",
+    },
+    opts = {
+        ensure_installed = { "gopls" },
+    },
 }
-
-M.config = function()
-    local mason = require("mason")
-    mason.setup()
-end
 
 return M
