@@ -1,6 +1,9 @@
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { desc = "Rename" })
 vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, { desc = "Open diagnostics float" })
+vim.keymap.set("n", "<leader>f", function()
+  vim.lsp.buf.format({ async = true })
+end, { desc = "Format buffer" })
 
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
