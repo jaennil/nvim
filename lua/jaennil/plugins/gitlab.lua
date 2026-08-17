@@ -43,6 +43,13 @@ return {
       desc = "Review branch diff against default branch",
     },
     {
+      "<leader>mh",
+      function()
+        require("jaennil.git_review").hunks()
+      end,
+      desc = "List branch diff hunks",
+    },
+    {
       "<leader>mB",
       function()
         require("jaennil.git_review").reset()
