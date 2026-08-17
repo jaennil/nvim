@@ -1,6 +1,6 @@
 {
   "diffview-plus.nvim": { "branch": "main", "commit": "fd688b76e260a26db4b22561af4db16596165e73" },
-  "diffwalk.nvim": { "branch": "main", "commit": "1e81ee804a3c046949395d96e8817d6e9a90cd9b" },
+  "diffwalk.nvim": { "branch": "main", "commit": "053432ba242bb326bd121bf5e7bcde9d29497c81" },
   "dropbar.nvim": { "branch": "master", "commit": "808ba31cde89aec8833e9789f5e04557cd31c9e1" },
   "fidget.nvim": { "branch": "main", "commit": "6f793b2bcd2d35e201c09520f698bb763220908a" },
   "gitlab.nvim": { "branch": "develop", "commit": "a87e55ef99d77c53167826ee9d4474e35cad57be" },
