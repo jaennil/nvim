@@ -38,19 +38,33 @@ return {
     {
       "<leader>mw",
       function()
-        local function run(args)
+        local function run(args, silent)
           local result = vim.system(args, { text = true }):wait()
 
           if result.code ~= 0 then
-            vim.notify(vim.trim(result.stderr), vim.log.levels.ERROR)
+            if not silent then
+              vim.notify(vim.trim(result.stderr), vim.log.levels.ERROR)
+            end
             return nil
           end
 
           return vim.trim(result.stdout)
         end
 
-        local target = run({ "glab", "mr", "view", "--output", "json", "--jq", ".target_branch" })
-        if not target or target == "" then
+        local head = run({ "git", "symbolic-ref", "--quiet", "refs/remotes/origin/HEAD" }, true)
+        local target = head and head:match("[^/]+$")
+
+        if not target then
+          for _, candidate in ipairs({ "master", "main" }) do
+            if run({ "git", "rev-parse", "--verify", "--quiet", "origin/" .. candidate }, true) then
+              target = candidate
+              break
+            end
+          end
+        end
+
+        if not target then
+          vim.notify("can't detect default branch", vim.log.levels.ERROR)
           return
         end
 
@@ -58,8 +72,12 @@ return {
           return
         end
 
-        local base = "origin/" .. target
-        local files = run({ "git", "diff", "--name-only", base .. "...HEAD" })
+        local base = run({ "git", "merge-base", "origin/" .. target, "HEAD" })
+        if not base then
+          return
+        end
+
+        local files = run({ "git", "diff", "--name-only", base })
         if not files then
           return
         end
@@ -71,10 +89,10 @@ return {
           table.insert(items, { filename = file, lnum = 1, col = 1, text = file })
         end
 
-        vim.fn.setqflist({}, " ", { title = "MR changes against " .. base, items = items })
+        vim.fn.setqflist({}, " ", { title = "changes against origin/" .. target, items = items })
         vim.cmd("copen")
       end,
-      desc = "Review MR in worktree",
+      desc = "Review branch diff against default branch",
     },
     {
       "<leader>mB",
