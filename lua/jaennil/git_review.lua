@@ -67,19 +67,43 @@ local function resolve(refresh)
   return base
 end
 
--- gitsigns paints word diff regions with TermCursor (reverse video), which
--- reads as random bright blocks; keep every highlight inside the diff palette
-local function palette()
-  -- a changed line is the added half of the change, so paint it green and let
-  -- show_deleted put the red original above it
-  vim.api.nvim_set_hl(0, "GitSignsChangeLn", { link = "GitSignsAddLn" })
+-- the theme's diff colors sit a few shades above the background and barely
+-- read as green or red, so the review palette is explicit: two colors only,
+-- green for what the branch adds, red for what it removes
+local colors = {
+  added = "#1a4a27",
+  added_sign = "#7fd962",
+  removed = "#7d2534",
+  removed_sign = "#f26d78",
+}
 
+local function palette()
+  -- a changed line is the added half of the change: green line, with
+  -- show_deleted putting the red original above it
+  for _, group in ipairs({ "GitSignsAddLn", "GitSignsChangeLn" }) do
+    vim.api.nvim_set_hl(0, group, { bg = colors.added })
+  end
+
+  vim.api.nvim_set_hl(0, "GitSignsDeleteVirtLn", { bg = colors.removed })
+
+  -- signs follow the same two colors, so a blue bar never shows up for a
+  -- change that is really an addition
+  for _, group in ipairs({ "GitSignsAdd", "GitSignsChange", "GitSignsUntracked" }) do
+    vim.api.nvim_set_hl(0, group, { fg = colors.added_sign })
+  end
+
+  for _, group in ipairs({ "GitSignsDelete", "GitSignsTopdelete", "GitSignsChangedelete" }) do
+    vim.api.nvim_set_hl(0, group, { fg = colors.removed_sign })
+  end
+
+  -- word diff regions default to TermCursor (reverse video), which reads as
+  -- random bright blocks; keep them in the same palette, one shade brighter
   for _, group in ipairs({ "GitSignsAddLnInline", "GitSignsChangeLnInline" }) do
-    vim.api.nvim_set_hl(0, group, { link = "GitSignsAddLn" })
+    vim.api.nvim_set_hl(0, group, { bg = "#276b38" })
   end
 
   for _, group in ipairs({ "GitSignsDeleteLnInline", "GitSignsDeleteVirtLnInLine" }) do
-    vim.api.nvim_set_hl(0, group, { link = "GitSignsDeleteVirtLn" })
+    vim.api.nvim_set_hl(0, group, { bg = "#a13446" })
   end
 end
 
