@@ -35,40 +35,5 @@ return {
       end,
       desc = "Review current GitLab merge request",
     },
-    {
-      "<leader>mw",
-      function()
-        require("jaennil.git_review").review()
-      end,
-      desc = "Review branch diff against default branch",
-    },
-    {
-      "<leader>mh",
-      function()
-        require("jaennil.git_review").hunks()
-      end,
-      desc = "List branch diff hunks",
-    },
-    {
-      "<leader>mc",
-      function()
-        require("jaennil.git_review").commits()
-      end,
-      desc = "Walk the diff of a commit",
-    },
-    {
-      "<leader>md",
-      function()
-        require("jaennil.git_review").toggle_deleted()
-      end,
-      desc = "Toggle deleted lines in the file",
-    },
-    {
-      "<leader>mB",
-      function()
-        require("jaennil.git_review").reset()
-      end,
-      desc = "Reset Git diff base",
-    },
   },
 }

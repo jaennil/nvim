@@ -16,6 +16,7 @@ require("lazy").setup({
     require "jaennil/plugins/fugitive",
     require "jaennil/plugins/gitsigns",
     require "jaennil/plugins/gitlab",
+    require "jaennil/plugins/diffwalk",
     require "jaennil/plugins/which-key",
     require "jaennil/plugins/undotree",
     require "jaennil/plugins/tmux",
