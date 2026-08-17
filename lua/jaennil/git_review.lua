@@ -105,9 +105,14 @@ local function palette()
     vim.api.nvim_set_hl(0, group, { bg = colors.added_word })
   end
 
-  for _, group in ipairs({ "GitSignsDeleteInline", "GitSignsDeleteLnInline", "GitSignsDeleteVirtLnInLine" }) do
+  for _, group in ipairs({ "GitSignsDeleteInline", "GitSignsDeleteLnInline" }) do
     vim.api.nvim_set_hl(0, group, { bg = colors.removed_word })
   end
+
+  -- inside a fully deleted line the word diff covers arbitrary chunks, leading
+  -- whitespace included, which only breaks the line into ragged shades; keep
+  -- those lines one flat red
+  vim.api.nvim_set_hl(0, "GitSignsDeleteVirtLnInLine", { bg = colors.removed })
 end
 
 -- line highlights and deleted lines live in the file buffers, driven by
