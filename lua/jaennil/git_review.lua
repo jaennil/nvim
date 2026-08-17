@@ -1,6 +1,8 @@
--- review the current branch against the default branch: gitsigns base,
--- changed files in quickfix and a highlighted list of hunks
+-- review the current branch against the default branch: added and removed
+-- lines are highlighted in the file itself, the hunk list is only navigation
 local M = {}
+
+local ns = vim.api.nvim_create_namespace("jaennil_git_review")
 
 local state = {
   base = nil,
@@ -65,6 +67,20 @@ local function resolve(refresh)
   return base
 end
 
+-- line highlights, deleted lines and word diff live in the file buffers,
+-- driven by gitsigns against the review base
+local function highlight(on)
+  local gitsigns = require("gitsigns")
+
+  -- a changed line is the added half of the change, so paint it green and let
+  -- show_deleted put the red original above it
+  vim.api.nvim_set_hl(0, "GitSignsChangeLn", { link = "GitSignsAddLn" })
+
+  gitsigns.toggle_linehl(on)
+  gitsigns.toggle_deleted(on)
+  gitsigns.toggle_word_diff(on)
+end
+
 function M.review()
   local base = resolve(true)
   if not base then
@@ -77,6 +93,7 @@ function M.review()
   end
 
   require("gitsigns").change_base(base, true)
+  highlight(true)
 
   local items = {}
   for file in vim.gsplit(files, "\n", { plain = true, trimempty = true }) do
@@ -91,37 +108,82 @@ function M.reset()
   state.base = nil
   state.branch = nil
   require("gitsigns").change_base(nil, true)
+  highlight(false)
 end
 
--- maps every diff line to the file and line it points at, so <CR> can jump there
-local function locations(lines)
-  local map = {}
-  local file, lnum
+-- files with their hunks, each hunk pointing at its first changed line
+local function parse(diff)
+  local files, file, hunk, lnum = {}, nil, nil, nil
 
-  for i, line in ipairs(lines) do
-    local name = line:match("^%+%+%+ b/(.*)$")
+  for _, line in ipairs(vim.split(diff, "\n", { plain = true })) do
+    local old = line:match("^%-%-%- a/(.*)$")
+    local new = line:match("^%+%+%+ b/(.*)$")
     local start = line:match("^@@ %-[%d,]+ %+(%d+)")
-    local first = line:sub(1, 1)
+    local kind = line:sub(1, 1)
 
-    if name then
-      file = name ~= "dev/null" and (state.root .. "/" .. name) or nil
-      lnum = nil
-    elseif start then
+    if line:match("^diff %-%-git ") then
+      file, hunk = nil, nil
+    elseif old then
+      file = { path = old, added = 0, removed = 0, hunks = {} }
+    elseif new or line == "+++ /dev/null" then
+      file = file or { added = 0, removed = 0, hunks = {} }
+      file.path = new or file.path -- a deleted file keeps its old path
+      table.insert(files, file)
+    elseif start and file then
       lnum = tonumber(start)
-      map[i] = file and { file = file, lnum = lnum }
-    elseif lnum and first == "\\" then -- "\ No newline at end of file"
-      map[i] = file and { file = file, lnum = lnum }
-    elseif lnum and (first == " " or first == "+") then
-      map[i] = file and { file = file, lnum = lnum }
+      hunk = { lnum = lnum, added = 0, removed = 0 }
+      table.insert(file.hunks, hunk)
+    elseif hunk and kind == "+" then
+      file.added, hunk.added = file.added + 1, hunk.added + 1
+      if not hunk.text then
+        hunk.lnum, hunk.sign, hunk.text = lnum, "+", vim.trim(line:sub(2))
+      end
       lnum = lnum + 1
-    elseif lnum and first == "-" then
-      map[i] = file and { file = file, lnum = lnum }
-    else
-      lnum = nil
+    elseif hunk and kind == "-" then
+      file.removed, hunk.removed = file.removed + 1, hunk.removed + 1
+      if not hunk.text then
+        hunk.lnum, hunk.sign, hunk.text = lnum, "-", vim.trim(line:sub(2))
+      end
+    elseif hunk and kind == " " then
+      lnum = lnum + 1
     end
   end
 
-  return map
+  return files
+end
+
+-- one line per file, one per hunk; targets[line] is where <CR> jumps
+local function render(files)
+  local lines, marks, targets = {}, {}, {}
+
+  for _, file in ipairs(files) do
+    local path = state.root .. "/" .. file.path
+    local added = ("+%d"):format(file.added)
+    local removed = ("-%d"):format(file.removed)
+
+    table.insert(lines, ("%s  %s %s"):format(file.path, added, removed))
+    targets[#lines] = {
+      file = path,
+      lnum = file.hunks[1] and file.hunks[1].lnum or 1,
+      header = true,
+    }
+
+    local col = #file.path + 2
+    table.insert(marks, { #lines, 0, #file.path, "Directory" })
+    table.insert(marks, { #lines, col, col + #added, "Added" })
+    table.insert(marks, { #lines, col + #added + 1, col + #added + 1 + #removed, "Removed" })
+
+    for _, hunk in ipairs(file.hunks) do
+      local number = ("%6d"):format(hunk.lnum)
+      local sign = hunk.sign or " "
+      table.insert(lines, ("%s  %s %s"):format(number, sign, hunk.text or ""))
+      targets[#lines] = { file = path, lnum = hunk.lnum }
+      table.insert(marks, { #lines, 0, #number, "LineNr" })
+      table.insert(marks, { #lines, #number + 2, #number + 3, sign == "-" and "Removed" or "Added" })
+    end
+  end
+
+  return lines, marks, targets
 end
 
 function M.hunks()
@@ -140,31 +202,43 @@ function M.hunks()
     return
   end
 
-  local lines = vim.split(diff, "\n", { plain = true })
-  local map = locations(lines)
+  require("gitsigns").change_base(base, true)
+  highlight(true)
+
+  local lines, marks, targets = render(parse(diff))
   local origin = vim.api.nvim_get_current_win()
 
   local buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
   vim.api.nvim_buf_set_name(buf, "git-review://" .. base:sub(1, 7))
-  vim.bo[buf].filetype = "diff"
+  vim.bo[buf].filetype = "git-review"
+
+  for _, mark in ipairs(marks) do
+    local line, from, to, group = unpack(mark)
+    vim.api.nvim_buf_set_extmark(buf, ns, line - 1, from, { end_col = to, hl_group = group })
+  end
+
   vim.bo[buf].modifiable = false
 
-  vim.cmd("botright 20split")
+  vim.cmd("botright 15split")
   vim.api.nvim_win_set_buf(0, buf)
   vim.wo.number = false
   vim.wo.relativenumber = false
   vim.wo.signcolumn = "no"
   vim.wo.wrap = false
+  vim.wo.cursorline = true
   vim.wo.winfixheight = true
 
-  local function map_key(lhs, rhs, desc)
-    vim.keymap.set("n", lhs, rhs, { buffer = buf, desc = desc })
-  end
+  local list = vim.api.nvim_get_current_win()
 
-  map_key("<CR>", function()
-    local target = map[vim.fn.line(".")]
+  local function open(focus)
+    local target = targets[vim.fn.line(".")]
     if not target then
+      return
+    end
+
+    if not vim.uv.fs_stat(target.file) then
+      vim.notify(target.file .. " is gone in the working tree", vim.log.levels.WARN)
       return
     end
 
@@ -176,12 +250,41 @@ function M.hunks()
 
     vim.cmd("edit " .. vim.fn.fnameescape(target.file))
     local last = vim.api.nvim_buf_line_count(0)
-    vim.api.nvim_win_set_cursor(0, { math.min(target.lnum, last), 0 })
+    vim.api.nvim_win_set_cursor(0, { math.min(math.max(target.lnum, 1), last), 0 })
     vim.cmd("normal! zz")
-  end, "Jump to hunk location")
 
-  map_key("]h", "/^@@<CR>", "Next hunk")
-  map_key("[h", "?^@@<CR>", "Previous hunk")
+    if not focus and vim.api.nvim_win_is_valid(list) then
+      vim.api.nvim_set_current_win(list)
+    end
+  end
+
+  -- next/previous file header, so ]f skips over the hunks in between
+  local function to_file(step)
+    local line = vim.fn.line(".")
+    for i = line + step, step > 0 and #lines or 1, step do
+      if targets[i] and targets[i].header then
+        vim.api.nvim_win_set_cursor(list, { i, 0 })
+        return
+      end
+    end
+  end
+
+  local function map_key(lhs, rhs, desc)
+    vim.keymap.set("n", lhs, rhs, { buffer = buf, desc = desc })
+  end
+
+  map_key("<CR>", function()
+    open(true)
+  end, "Open hunk")
+  map_key("o", function()
+    open(false)
+  end, "Preview hunk, keep focus on the list")
+  map_key("]f", function()
+    to_file(1)
+  end, "Next file")
+  map_key("[f", function()
+    to_file(-1)
+  end, "Previous file")
   map_key("q", "<CMD>close<CR>", "Close hunk list")
 end
 
