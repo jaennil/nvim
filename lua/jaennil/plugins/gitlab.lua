@@ -50,6 +50,13 @@ return {
       desc = "List branch diff hunks",
     },
     {
+      "<leader>mc",
+      function()
+        require("jaennil.git_review").commits()
+      end,
+      desc = "Walk the diff of a commit",
+    },
+    {
       "<leader>md",
       function()
         require("jaennil.git_review").toggle_deleted()

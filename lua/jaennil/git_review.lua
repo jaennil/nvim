@@ -62,9 +62,14 @@ local function resolve(refresh)
 
   state.base = base
   state.branch = branch
-  state.root = run({ "git", "rev-parse", "--show-toplevel" })
 
   return base
+end
+
+-- repo root, so diff paths resolve no matter the window's cwd
+local function root()
+  state.root = state.root or run({ "git", "rev-parse", "--show-toplevel" })
+  return state.root
 end
 
 -- the theme's diff colors sit a few shades above the background and barely
@@ -161,6 +166,7 @@ function M.reset()
   highlight(false)
 end
 
+
 -- files with their hunks, each hunk pointing at its first changed line
 local function parse(diff)
   local files, file, hunk, lnum = {}, nil, nil, nil
@@ -204,7 +210,7 @@ end
 
 local LIST_NAME = "git-review://"
 
--- buffers and window left over from a previous hunk list; the buffer survives
+-- buffers and window left over from a previous list; the buffer survives
 -- closing the window, and its name would collide with the new one
 local function previous_lists()
   local bufs = {}
@@ -230,7 +236,7 @@ local function render(files)
   local lines, marks, targets = {}, {}, {}
 
   for _, file in ipairs(files) do
-    local path = state.root .. "/" .. file.path
+    local path = root() .. "/" .. file.path
     local added = ("+%d"):format(file.added)
     local removed = ("-%d"):format(file.removed)
 
@@ -259,29 +265,9 @@ local function render(files)
   return lines, marks, targets
 end
 
-function M.hunks()
-  local base = resolve(false)
-  if not base then
-    return
-  end
-
-  local diff = run({ "git", "diff", "--no-color", base })
-  if not diff then
-    return
-  end
-
-  if diff == "" then
-    vim.notify("no changes against origin/" .. state.branch)
-    return
-  end
-
-  require("gitsigns").change_base(base, true)
-  highlight(true)
-
-  local lines, marks, targets = render(parse(diff))
-
-  -- a list from an earlier call still holds its name and stale targets, and
-  -- its window is the one to reuse
+-- the panel itself: a scratch buffer in a bottom split, reusing the window of
+-- a list opened earlier
+local function open_panel(name, lines, marks)
   local stale = previous_lists()
   local origin = vim.api.nvim_get_current_win()
   if stale.win and origin == stale.win then
@@ -314,7 +300,7 @@ function M.hunks()
     end
   end
 
-  vim.api.nvim_buf_set_name(buf, LIST_NAME .. base:sub(1, 7))
+  vim.api.nvim_buf_set_name(buf, LIST_NAME .. name)
   vim.wo.number = false
   vim.wo.relativenumber = false
   vim.wo.signcolumn = "no"
@@ -322,7 +308,16 @@ function M.hunks()
   vim.wo.cursorline = true
   vim.wo.winfixheight = true
 
-  local list = vim.api.nvim_get_current_win()
+  return buf, vim.api.nvim_get_current_win(), origin
+end
+
+local function map_key(buf, lhs, rhs, desc)
+  vim.keymap.set("n", lhs, rhs, { buffer = buf, desc = desc })
+end
+
+-- shared by every hunk list: jumping into the file, walking files, closing
+local function hunk_panel(name, lines, marks, targets, back)
+  local buf, list, origin = open_panel(name, lines, marks)
 
   local function open(focus)
     local target = targets[vim.fn.line(".")]
@@ -362,23 +357,125 @@ function M.hunks()
     end
   end
 
-  local function map_key(lhs, rhs, desc)
-    vim.keymap.set("n", lhs, rhs, { buffer = buf, desc = desc })
-  end
-
-  map_key("<CR>", function()
+  map_key(buf, "<CR>", function()
     open(true)
   end, "Open hunk")
-  map_key("o", function()
+  map_key(buf, "o", function()
     open(false)
   end, "Preview hunk, keep focus on the list")
-  map_key("]f", function()
+  map_key(buf, "]f", function()
     to_file(1)
   end, "Next file")
-  map_key("[f", function()
+  map_key(buf, "[f", function()
     to_file(-1)
   end, "Previous file")
-  map_key("q", "<CMD>close<CR>", "Close hunk list")
+  map_key(buf, "q", "<CMD>close<CR>", "Close hunk list")
+
+  if back then
+    map_key(buf, "<BS>", back, "Back to the commit list")
+  end
+end
+
+function M.hunks()
+  local base = resolve(false)
+  if not base then
+    return
+  end
+
+  local diff = run({ "git", "diff", "--no-color", base })
+  if not diff then
+    return
+  end
+
+  if diff == "" then
+    vim.notify("no changes against origin/" .. state.branch)
+    return
+  end
+
+  require("gitsigns").change_base(base, true)
+  highlight(true)
+
+  local lines, marks, targets = render(parse(diff))
+  hunk_panel(base:sub(1, 7), lines, marks, targets)
+end
+
+-- the empty tree, so the first commit in a repo diffs against something
+local EMPTY_TREE = "4b825dc642cb6eb9a060e54bf8d69288fbee4904"
+
+-- one commit's own changes: diffed against its parent, with gitsigns showing
+-- the same range in the files
+function M.commit(rev, back)
+  local parent = run({ "git", "rev-parse", "--verify", "--quiet", rev .. "^" }, true) or EMPTY_TREE
+  local diff = run({ "git", "diff", "--no-color", parent, rev })
+
+  if not diff or diff == "" then
+    vim.notify("no changes in " .. rev)
+    return
+  end
+
+  require("gitsigns").change_base(parent, true)
+  highlight(true)
+
+  local lines, marks, targets = render(parse(diff))
+  hunk_panel(rev, lines, marks, targets, back)
+end
+
+local function commit_entries(limit)
+  local log = run({ "git", "log", "--no-color", "-n", tostring(limit), "--pretty=format:%h\30%ar\30%an\30%s" })
+  if not log then
+    return nil
+  end
+
+  local entries = {}
+  for line in vim.gsplit(log, "\n", { plain = true, trimempty = true }) do
+    local parts = vim.split(line, "\30", { plain = true })
+    table.insert(entries, { rev = parts[1], age = parts[2], author = parts[3], subject = parts[4] })
+  end
+
+  return entries
+end
+
+local function render_commits(entries)
+  local lines, marks, targets = {}, {}, {}
+  local width = 0
+
+  for _, entry in ipairs(entries) do
+    width = math.max(width, #entry.age)
+  end
+
+  for _, entry in ipairs(entries) do
+    local age = ("%-" .. width .. "s"):format(entry.age)
+    table.insert(lines, ("%s  %s  %s"):format(entry.rev, age, entry.subject))
+    targets[#lines] = entry
+
+    local age_at = #entry.rev + 2
+    table.insert(marks, { #lines, 0, #entry.rev, "Added" })
+    table.insert(marks, { #lines, age_at, age_at + #age, "Comment" })
+  end
+
+  return lines, marks, targets
+end
+
+-- pick a commit, then walk its diff; <CR> drills in, <BS> comes back here
+function M.commits(limit)
+  local entries = commit_entries(limit or 100)
+  if not entries or #entries == 0 then
+    vim.notify("no commits", vim.log.levels.WARN)
+    return
+  end
+
+  local lines, marks, targets = render_commits(entries)
+  local buf = open_panel("commits", lines, marks)
+
+  map_key(buf, "<CR>", function()
+    local entry = targets[vim.fn.line(".")]
+    if entry then
+      M.commit(entry.rev, function()
+        M.commits(limit)
+      end)
+    end
+  end, "Show this commit's diff")
+  map_key(buf, "q", "<CMD>close<CR>", "Close commit list")
 end
 
 return M
