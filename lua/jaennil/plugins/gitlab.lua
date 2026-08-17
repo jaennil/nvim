@@ -50,6 +50,13 @@ return {
       desc = "List branch diff hunks",
     },
     {
+      "<leader>md",
+      function()
+        require("jaennil.git_review").toggle_deleted()
+      end,
+      desc = "Toggle deleted lines in the file",
+    },
+    {
       "<leader>mB",
       function()
         require("jaennil.git_review").reset()

@@ -67,18 +67,36 @@ local function resolve(refresh)
   return base
 end
 
--- line highlights, deleted lines and word diff live in the file buffers,
--- driven by gitsigns against the review base
-local function highlight(on)
-  local gitsigns = require("gitsigns")
-
+-- gitsigns paints word diff regions with TermCursor (reverse video), which
+-- reads as random bright blocks; keep every highlight inside the diff palette
+local function palette()
   -- a changed line is the added half of the change, so paint it green and let
   -- show_deleted put the red original above it
   vim.api.nvim_set_hl(0, "GitSignsChangeLn", { link = "GitSignsAddLn" })
 
+  for _, group in ipairs({ "GitSignsAddLnInline", "GitSignsChangeLnInline" }) do
+    vim.api.nvim_set_hl(0, group, { link = "GitSignsAddLn" })
+  end
+
+  for _, group in ipairs({ "GitSignsDeleteLnInline", "GitSignsDeleteVirtLnInLine" }) do
+    vim.api.nvim_set_hl(0, group, { link = "GitSignsDeleteVirtLn" })
+  end
+end
+
+-- line highlights and deleted lines live in the file buffers, driven by
+-- gitsigns against the review base
+local function highlight(on)
+  local gitsigns = require("gitsigns")
+
+  palette()
   gitsigns.toggle_linehl(on)
   gitsigns.toggle_deleted(on)
-  gitsigns.toggle_word_diff(on)
+  gitsigns.toggle_word_diff(false)
+end
+
+-- deleted lines are the noisiest part of the review, so keep them togglable
+function M.toggle_deleted()
+  require("gitsigns").toggle_deleted()
 end
 
 function M.review()
