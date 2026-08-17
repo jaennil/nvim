@@ -202,6 +202,29 @@ local function parse(diff)
   return files
 end
 
+local LIST_NAME = "git-review://"
+
+-- buffers and window left over from a previous hunk list; the buffer survives
+-- closing the window, and its name would collide with the new one
+local function previous_lists()
+  local bufs = {}
+
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_get_name(buf):find(LIST_NAME, 1, true) then
+      table.insert(bufs, buf)
+    end
+  end
+
+  local win
+  for _, candidate in ipairs(vim.api.nvim_list_wins()) do
+    if vim.tbl_contains(bufs, vim.api.nvim_win_get_buf(candidate)) then
+      win = candidate
+    end
+  end
+
+  return { bufs = bufs, win = win }
+end
+
 -- one line per file, one per hunk; targets[line] is where <CR> jumps
 local function render(files)
   local lines, marks, targets = {}, {}, {}
@@ -256,12 +279,19 @@ function M.hunks()
   highlight(true)
 
   local lines, marks, targets = render(parse(diff))
+
+  -- a list from an earlier call still holds its name and stale targets, and
+  -- its window is the one to reuse
+  local stale = previous_lists()
   local origin = vim.api.nvim_get_current_win()
+  if stale.win and origin == stale.win then
+    origin = vim.fn.win_getid(vim.fn.winnr("#"))
+  end
 
   local buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-  vim.api.nvim_buf_set_name(buf, "git-review://" .. base:sub(1, 7))
   vim.bo[buf].filetype = "git-review"
+  vim.bo[buf].bufhidden = "wipe"
 
   for _, mark in ipairs(marks) do
     local line, from, to, group = unpack(mark)
@@ -270,8 +300,21 @@ function M.hunks()
 
   vim.bo[buf].modifiable = false
 
-  vim.cmd("botright 15split")
-  vim.api.nvim_win_set_buf(0, buf)
+  if vim.api.nvim_win_is_valid(stale.win or -1) then
+    vim.api.nvim_win_set_buf(stale.win, buf)
+    vim.api.nvim_set_current_win(stale.win)
+  else
+    vim.cmd("botright 15split")
+    vim.api.nvim_win_set_buf(0, buf)
+  end
+
+  for _, old_buf in ipairs(stale.bufs) do
+    if vim.api.nvim_buf_is_valid(old_buf) then
+      vim.api.nvim_buf_delete(old_buf, { force = true })
+    end
+  end
+
+  vim.api.nvim_buf_set_name(buf, LIST_NAME .. base:sub(1, 7))
   vim.wo.number = false
   vim.wo.relativenumber = false
   vim.wo.signcolumn = "no"
