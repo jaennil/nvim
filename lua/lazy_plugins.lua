@@ -9,6 +9,7 @@ require("lazy").setup({
     require "jaennil/plugins/ui/colorizer",
     require "jaennil/plugins/ui/todo",
     require "jaennil/plugins/ui/fidget",
+    require "jaennil/plugins/ui/context",
 
     -- utils
     require "jaennil/plugins/yazi",
