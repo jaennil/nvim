@@ -68,13 +68,16 @@ local function resolve(refresh)
 end
 
 -- the theme's diff colors sit a few shades above the background and barely
--- read as green or red, so the review palette is explicit: two colors only,
--- green for what the branch adds, red for what it removes
+-- read as green or red, so the review palette is explicit: saturated green
+-- for what the branch adds, saturated red for what it removes, with the word
+-- diff one step brighter on top of both
 local colors = {
-  added = "#1a4a27",
-  added_sign = "#7fd962",
-  removed = "#7d2534",
-  removed_sign = "#f26d78",
+  added = "#005f00",
+  added_word = "#008700",
+  added_sign = "#5fd75f",
+  removed = "#5f0000",
+  removed_word = "#870000",
+  removed_sign = "#ff005f",
 }
 
 local function palette()
@@ -98,12 +101,12 @@ local function palette()
 
   -- word diff regions default to TermCursor (reverse video), which reads as
   -- random bright blocks; keep them in the same palette, one shade brighter
-  for _, group in ipairs({ "GitSignsAddLnInline", "GitSignsChangeLnInline" }) do
-    vim.api.nvim_set_hl(0, group, { bg = "#276b38" })
+  for _, group in ipairs({ "GitSignsAddInline", "GitSignsAddLnInline", "GitSignsChangeInline", "GitSignsChangeLnInline" }) do
+    vim.api.nvim_set_hl(0, group, { bg = colors.added_word })
   end
 
-  for _, group in ipairs({ "GitSignsDeleteLnInline", "GitSignsDeleteVirtLnInLine" }) do
-    vim.api.nvim_set_hl(0, group, { bg = "#a13446" })
+  for _, group in ipairs({ "GitSignsDeleteInline", "GitSignsDeleteLnInline", "GitSignsDeleteVirtLnInLine" }) do
+    vim.api.nvim_set_hl(0, group, { bg = colors.removed_word })
   end
 end
 
@@ -115,7 +118,7 @@ local function highlight(on)
   palette()
   gitsigns.toggle_linehl(on)
   gitsigns.toggle_deleted(on)
-  gitsigns.toggle_word_diff(false)
+  gitsigns.toggle_word_diff(on)
 end
 
 -- deleted lines are the noisiest part of the review, so keep them togglable
