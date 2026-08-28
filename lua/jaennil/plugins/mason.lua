@@ -5,7 +5,7 @@ local M = {
         "neovim/nvim-lspconfig",
     },
     opts = {
-        ensure_installed = { "gopls" },
+        ensure_installed = { "gopls", "intelephense" },
     },
 }
 
